@@ -7,7 +7,7 @@ const router = require("./router");
 
 mongoose.set("useCreateIndex", true);
 mongoose
-  .connect(dbConnectionString, {
+  .connect(process.env.MONGO, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
