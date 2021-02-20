@@ -22,13 +22,21 @@ const schema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["CREATED", "ORDERED", "RECEIVED", "SHIPPED", "ARRIVED", "COMPLETED", "CANCELED"],
+    enum: [
+      "CREATED",
+      "ORDERED",
+      "RECEIVED",
+      "SHIPPED",
+      "ARRIVED",
+      "COMPLETED",
+      "CANCELED",
+    ],
     required: true,
     default: "CREATED",
   },
   delivery: {
     type: String,
-    enum: ["FULL", "SELF"],
+    enum: ["FULL", "PICKUP"],
     required: true,
   },
   isUrgent: Boolean,
@@ -68,31 +76,40 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectID,
     ref: "User",
   },
-  statusHistory: {type: [{to: String, by: String, at: Date}], default: []} 
+  statusHistory: { type: [{ to: String, by: String, at: Date }], default: [] },
 });
 
 const Order = mongoose.model("Order", schema);
 
 const validate = function (order) {
-  const schema = Joi.object().keys({
-    client: Joi.string().min(24).max(24).required(),
-    orderNumber: Joi.string().min(4).max(10).required(),
-    category: Joi.string().required(),
-    description: Joi.string().min(3).max(256).required(),
-    delivery: Joi.string().valid("FULL", "SELF").required(),
-    address: Joi.string().valid(""),
-    notes: Joi.string().valid(""),
-    link: Joi.string().valid(""),
-    isUrgent: Joi.boolean(),
-    price: Joi.object().keys({
-      itemPrice: Joi.number().required(),
-      deliveryPrice: Joi.number().required(),
-      shippingPrice: Joi.number().required(),
-      itemCurrency: Joi.string().valid("USD", "SDG", "AED", "SAR").required(),
-      profit: Joi.number().required(),
-      payoutCurrency: Joi.string().valid("USD", "SDG", "AED", "SAR").required(),
-    }),
-  }).unknown(false);
+  const schema = Joi.object()
+    .keys({
+      _id: Joi.string().min(24).max(24).allow(""),
+      client: Joi.string().min(24).max(24).required(),
+      orderNumber: Joi.string().min(4).max(10).required(),
+      category: Joi.string().required(),
+      description: Joi.string().min(3).max(256).required(),
+      delivery: Joi.string().valid("FULL", "PICKUP").required(),
+      address: Joi.string().allow(""),
+      notes: Joi.string().allow(""),
+      link: Joi.string().allow(""),
+      isUrgent: Joi.boolean(),
+      price: Joi.object()
+        .keys({
+          itemPrice: Joi.number().required(),
+          deliveryPrice: Joi.number().required(),
+          shippingPrice: Joi.number().required(),
+          itemCurrency: Joi.string()
+            .valid("USD", "SDG", "AED", "SAR")
+            .required(),
+          profit: Joi.number().required(),
+          payoutCurrency: Joi.string()
+            .valid("USD", "SDG", "AED", "SAR")
+            .required(),
+        })
+        .unknown(true),
+    })
+    .unknown(true);
 
   return Joi.validate(order, schema);
 };

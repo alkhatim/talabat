@@ -1,32 +1,28 @@
-const mongoose = require("mongoose");
-
-module.exports = (price, from, to) => {
-	const rate = await mongoose.connection.collection("config").findOne({name: "rate"});
-  
+module.exports = (price, from, to, rate) => {
   let usd = 0;
 
   switch (from) {
     case "USD":
-		usd = price;
+      usd = price;
     case "SDG":
-		usd = price / rate.SDG;
+      usd = price / rate.SDG;
     case "AED":
-		usd = price / rate.AED;
+      usd = price / rate.AED;
     case "SAR":
-		usd = price / rate.SAR;
+      usd = price / rate.SAR;
     default:
       usd = price;
   }
 
   switch (to) {
     case "USD":
-		return usd;
+      return usd;
     case "SDG":
-		return usd * rate.SDG;
+      return usd * rate.SDG;
     case "AED":
-		return usd * rate.AED;
+      return usd * rate.AED;
     case "SAR":
-		return usd * rate.SAR;
+      return usd * rate.SAR;
     default:
       return usd;
   }

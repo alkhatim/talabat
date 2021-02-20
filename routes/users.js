@@ -7,12 +7,12 @@ const { User, validate } = require("../models/User");
 const validateId = require("../middleware/validateId");
 
 router.get("/", async (req, res) => {
-  const users = await User.find({}).select("-password");
+  const users = await User.find({}).select("-password").lean();
   res.status(200).send(users);
 });
 
-router.get("/id", validateId, async (req, res) => {
-  const user = await User.findById(req.params.id).select("-password");
+router.get("/:id", validateId, async (req, res) => {
+  const user = await User.findById(req.params.id).select("-password").lean();
   res.status(200).send(user);
 });
 
@@ -66,7 +66,9 @@ router.put("/:id", [admin, validateId], async (req, res) => {
     await bcrypt.genSalt(10)
   );
 
-  user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  }).lean();
 
   res
     .status(200)
@@ -74,7 +76,7 @@ router.put("/:id", [admin, validateId], async (req, res) => {
 });
 
 router.delete("/:id", [admin, validateId], async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findByIdAndDelete(req.params.id).lean();
   if (!user) return res.status(404).send("There is no user with the given ID");
   res.status(200).send();
 });

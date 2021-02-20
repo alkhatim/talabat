@@ -1,0 +1,42 @@
+.hand {
+  cursor: pointer;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Font size */
+.bold-text {
+  font-weight: 600 !important;
+}
+
+.fs-xs {
+  font-size: 0.6rem !important;
+}
+
+.fs-s {
+  font-size: 0.8rem !important;
+}
+
+.fs-m {
+  font-size: 1rem !important;
+}
+
+.fs-l {
+  font-size: 1.2rem !important;
+}
+
+.fs-xl {
+  font-size: 1.4rem !important;
+}
+
+.fs-xxl {
+  font-size: 1.6rem !important;
+}
+
+.fs-xxxl {
+  font-size: 1.8rem !important;
+}

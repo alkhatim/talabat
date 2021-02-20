@@ -24,15 +24,52 @@ router.post("/", async (req, res) => {
     .send(_.pick(user, ["_id", "username", "phone", "email", "role"]));
 });
 
+router.put("/", async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      phone: req.body.phone,
+      email: req.body.email,
+    },
+    { new: true }
+  ).lean();
+
+  res
+    .status(200)
+    .send(_.pick(user, ["_id", "username", "phone", "email", "role"]));
+});
+
+router.put("/updatepassword", async (req, res) => {
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    return res.status(400).send("Passwords don't match");
+  }
+
+  const match = await bcrypt.compare(req.body.oldPassword, user.password);
+  if (!match) return res.status(400).send("Wrong password");
+
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.newPassword, salt);
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { password },
+    { new: true }
+  ).lean();
+
+  res
+    .status(200)
+    .send(_.pick(user, ["_id", "username", "phone", "email", "role"]));
+});
+
 router.get("/", async (req, res) => {
   const token = req.header("x-token");
   if (!token) return res.status(401).send("No authentication token provided");
 
   try {
     const decoded = jwt.verify(token, process.env.JWT);
-    const user = await User.findById(decoded._id).select(
-      "_id username phone email role"
-    );
+    const user = await User.findById(decoded._id)
+      .select("_id username phone email role")
+      .lean();
     res.status(200).send(user);
   } catch (error) {
     res.status(400).send("Invalid authentication token");

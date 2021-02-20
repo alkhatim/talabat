@@ -16,8 +16,10 @@ mongoose
   .catch((e) => console.error(e));
 
 app.use(express.json());
-app.use("/api/auth", authRouter);
+app.use("/api/v1/auth", authRouter);
 app.use(authMiddleware);
 app.use("/api/v1", router);
 
-app.listen(process.env.PORT, () => console.log("listening on port", port));
+app.listen(process.env.NODE_PORT, () =>
+  console.log("listening on port", process.env.NODE_PORT)
+);

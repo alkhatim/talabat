@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon index",
-    "client": "npm start --prefix ../client",
+    "server": "nodemon server",
+    "client": "npm start --prefix ./client",
     "app": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "alkhatim",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/alkhatim/ems#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "concurrently": "^5.0.2",
+    "concurrently": "^5.3.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "joi": "^14.3.1",
@@ -23,9 +23,5 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.7.5",
     "nodemon": "^2.0.2"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.17.0"
   }
 }
