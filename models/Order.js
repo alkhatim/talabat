@@ -56,7 +56,7 @@ const schema = new mongoose.Schema({
       enum: ["USD", "SDG", "AED", "SAR"],
       required: true,
     },
-    paid: Number,
+    paid: { type: Number, default: 0 },
   },
   address: String,
   notes: String,

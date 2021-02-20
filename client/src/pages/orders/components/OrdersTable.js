@@ -34,12 +34,17 @@ const OrdersTable = ({ orders }) => {
   const columns = [
     {
       dataField: "orderNumber",
-      text: "Order #",
+      text: "#",
       sort: true,
     },
     {
       dataField: "client.name",
       text: "Client",
+      sort: true,
+    },
+    {
+      dataField: "description",
+      text: "Item",
       sort: true,
     },
     {
@@ -58,6 +63,16 @@ const OrdersTable = ({ orders }) => {
       text: "Actions",
       formatter: (cellContent, order) => (
         <ul className="list-inline font-size-20 contact-links mb-0">
+          <li className="list-inline-item px-2">
+            <Link
+              to={{
+                pathname: `/order/${order._id}/info`,
+                state: { order },
+              }}
+            >
+              <i className="bx bx-info-circle" />
+            </Link>
+          </li>
           <li className="list-inline-item px-2">
             <Link
               to={{
