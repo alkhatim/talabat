@@ -1,7 +1,7 @@
-const Rate = require("../models/Rate");
+const mongoose = require("mongoose");
 
 module.exports = (price, from, to) => {
-	const rate = await Rate.findOne({});
+	const rate = await mongoose.connection.collection("config").findOne({name: "rate"});
   
   let usd = 0;
 

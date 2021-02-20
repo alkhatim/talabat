@@ -18,6 +18,6 @@ mongoose
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use(authMiddleware);
-app.use("/api", router)
+app.use("/api/v1", router);
 
 app.listen(process.env.PORT, () => console.log("listening on port", port));
