@@ -96,7 +96,7 @@ const SidebarContent = (props) => {
             </Link>
             <ul className="sub-menu" aria-expanded="false">
               <li>
-                <Link to="/add-client">Add Client</Link>
+                <Link to="/client">Add Client</Link>
               </li>
               <li>
                 <Link to="/clients">Clients</Link>
@@ -104,12 +104,12 @@ const SidebarContent = (props) => {
             </ul>
           </li>
 
-          <li>
+          {/* <li>
             <Link to="/profit" className="waves-effect">
               <i className="bx bx-dollar"></i>
               <span>Profit</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </>

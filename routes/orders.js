@@ -10,14 +10,14 @@ router.get("/", async (req, res) => {
   const orders = await Order.find({ status: { $ne: "CANCELED" } })
     .populate("client createdBy statusHistory.by")
     .lean();
-  res.status(200).send(orders.map((order) => order));
+  res.status(200).send(orders);
 });
 
 router.get("/all", async (req, res) => {
   const orders = await Order.find({})
     .populate("client createdBy statusHistory.by")
     .lean();
-  res.status(200).send(orders.map((order) => order));
+  res.status(200).send(orders);
 });
 
 router.get("/:id", validateId, async (req, res) => {
@@ -169,6 +169,13 @@ router.post("/:id/status", [admin, validateId], async (req, res) => {
     .lean();
 
   res.status(200).send(order);
+});
+
+router.get("/client/:id", async (req, res) => {
+  const orders = await Order.find({ client: req.params.id })
+    .populate("client createdBy")
+    .lean();
+  res.status(200).send(orders);
 });
 
 module.exports = router;

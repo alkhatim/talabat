@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -47,7 +47,7 @@ const validate = function (user) {
     .keys({
       username: Joi.string().min(3).max(30).required(),
       password: Joi.string().min(6).max(30).required(),
-      phone: Joi.number().min(8).max(10).required(),
+      phone: Joi.string().min(8).max(12).required(),
       email: Joi.string().required(),
       role: Joi.string().valid("agent", "admin").required(),
     })

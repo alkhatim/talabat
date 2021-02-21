@@ -4,7 +4,14 @@ import messages from "../../services/messages";
 export const getClients = () => async (dispatch) => {
   try {
     const { data } = await http.get("/clients");
-    dispatch({ type: "CLIENTS_LOADED", payload: data });
+    console.log(data);
+    dispatch({
+      type: "CLIENTS_LOADED",
+      payload: data.map((client) => ({
+        ...client,
+        createdAt: new Date(client.createdAt).toLocaleDateString(),
+      })),
+    });
   } catch (error) {
     messages.error(error);
   }

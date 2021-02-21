@@ -5,17 +5,26 @@ const admin = require("../middleware/admin");
 const validateId = require("../middleware/validateId");
 
 router.get("/", async (req, res) => {
-  const clients = await Client.find({}).lean();
+  const query = {};
+  if (req.user.role === "agent") query.createdBy = req.user._id;
+
+  const clients = await Client.find(query).populate("createdBy").lean();
   res.status(200).send(clients);
 });
 
 router.get("/lookup", async (req, res) => {
-  const clients = await Client.find({}).select("name").lean();
+  const query = {};
+  if (req.user.role === "agent") query.createdBy = req.user._id;
+
+  const clients = await Client.find(query).select("name").lean();
   res.status(200).send(clients);
 });
 
 router.get("/:id", validateId, async (req, res) => {
-  const client = await Client.findById(req.params.id).lean();
+  const query = { _id: req.params.id };
+  if (req.user.role === "agent") query.createdBy = req.user._id;
+
+  const client = await Client.findOne(query).populate("createdBy").lean();
   res.status(200).send(client);
 });
 
@@ -24,6 +33,7 @@ router.post("/", admin, async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const client = new Client(req.body);
+  client.createdBy = req.user._id;
 
   await client.save();
 
@@ -31,7 +41,10 @@ router.post("/", admin, async (req, res) => {
 });
 
 router.put("/:id", validateId, async (req, res) => {
-  let client = await Client.findById(req.params.id);
+  const query = { _id: req.params.id };
+  if (req.user.role === "agent") query.createdBy = req.user._id;
+
+  let client = await Client.findOne(query);
   if (!client)
     return res.status(404).send("There is no client with the given Id");
 
@@ -40,14 +53,20 @@ router.put("/:id", validateId, async (req, res) => {
 
   client = await Client.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-  }).lean();
+  })
+    .populate("createdBy")
+    .lean();
 
   res.status(200).send(client);
 });
 
 router.delete("/:id", [admin, validateId], async (req, res) => {
-  const client = await Client.findByIdAndDelete(req.params.id).lean();
-  if (!client) return res.status(404).send("There is no client with the given ID");
+  const query = { _id: req.params.id };
+  if (req.user.role === "agent") query.createdBy = req.user._id;
+
+  const client = await Client.findOneAndDelete(query).lean();
+  if (!client)
+    return res.status(404).send("There is no client with the given ID");
   res.status(200).send(client);
 });
 

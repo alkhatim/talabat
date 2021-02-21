@@ -25,6 +25,15 @@ export const getOrder = async (id) => {
   }
 };
 
+export const getClientOrders = async (id) => {
+  try {
+    const { data } = await http.get(`/orders/client/${id}`);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};
+
 export const createOrder = async (order) => {
   try {
     const { data } = await http.post("/orders", order);
