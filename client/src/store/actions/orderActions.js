@@ -3,7 +3,7 @@ import messages from "../../services/messages";
 
 export const getOrders = () => async (dispatch) => {
   try {
-    const { data } = await http.get("/orders");
+    const { data } = await http.get("/api/v1/orders");
     dispatch({
       type: "ORDERS_LOADED",
       payload: data.map((order) => ({
@@ -18,7 +18,7 @@ export const getOrders = () => async (dispatch) => {
 
 export const getOrder = async (id) => {
   try {
-    const { data } = await http.get(`/orders/${id}`);
+    const { data } = await http.get(`/api/v1/orders/${id}`);
     return data;
   } catch (error) {
     messages.error(error);
@@ -27,7 +27,7 @@ export const getOrder = async (id) => {
 
 export const getClientOrders = async (id) => {
   try {
-    const { data } = await http.get(`/orders/client/${id}`);
+    const { data } = await http.get(`/api/v1/orders/client/${id}`);
     return data;
   } catch (error) {
     messages.error(error);
@@ -36,7 +36,7 @@ export const getClientOrders = async (id) => {
 
 export const createOrder = async (order) => {
   try {
-    const { data } = await http.post("/orders", order);
+    const { data } = await http.post("/api/v1/orders", order);
     return data;
   } catch (error) {
     messages.error(error);
@@ -45,7 +45,7 @@ export const createOrder = async (order) => {
 
 export const updateOrder = async (id, order) => {
   try {
-    const { data } = await http.put(`/orders/${id}`, order);
+    const { data } = await http.put(`/api/v1/orders/${id}`, order);
     return data;
   } catch (error) {
     messages.error(error);
@@ -54,7 +54,7 @@ export const updateOrder = async (id, order) => {
 
 export const updateOrderStatus = async (id, status) => {
   try {
-    const { data } = await http.post(`/orders/${id}/status`, { status });
+    const { data } = await http.post(`/api/v1/orders/${id}/status`, { status });
     return data;
   } catch (error) {
     messages.error(error);
@@ -63,7 +63,7 @@ export const updateOrderStatus = async (id, status) => {
 
 export const payOrder = async (id, paid) => {
   try {
-    const { data } = await http.post(`/orders/${id}/pay`, { paid });
+    const { data } = await http.post(`/api/v1/orders/${id}/pay`, { paid });
     return data;
   } catch (error) {
     messages.error(error);
