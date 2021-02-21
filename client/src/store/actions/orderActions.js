@@ -19,7 +19,6 @@ export const getOrders = () => async (dispatch) => {
 export const getOrder = async (id) => {
   try {
     const { data } = await http.get(`/orders/${id}`);
-    console.log(data);
     return data;
   } catch (error) {
     messages.error(error);

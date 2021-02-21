@@ -8,25 +8,29 @@ const exchange = require("../helpers/exchange");
 
 router.get("/", async (req, res) => {
   const orders = await Order.find({ status: { $ne: "CANCELED" } })
-    .populate("client createdBy")
+    .populate("client createdBy statusHistory.by")
     .lean();
   res.status(200).send(orders.map((order) => order));
 });
 
 router.get("/all", async (req, res) => {
-  const orders = await Order.find({}).populate("client createdBy").lean();
+  const orders = await Order.find({})
+    .populate("client createdBy statusHistory.by")
+    .lean();
   res.status(200).send(orders.map((order) => order));
 });
 
 router.get("/:id", validateId, async (req, res) => {
   const order = await Order.findById(req.params.id)
-    .populate("client createdBy")
+    .populate("client createdBy statusHistory.by")
     .lean();
   res.status(200).send(order);
 });
 
 router.get("/client/:id", validateId, async (req, res) => {
-  const orders = await Order.find({ client: req.params.id }).lean();
+  const orders = await Order.find({ client: req.params.id })
+    .populate("client createdBy statusHistory.by")
+    .lean();
   res.status(200).send(orders);
 });
 
@@ -107,59 +111,62 @@ router.put("/:id", validateId, async (req, res) => {
 });
 
 router.post("/:id/pay", [admin, validateId], async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    "client createdBy statusHistory.by"
+  );
   if (!order)
     return res.status(404).send("There is no order with the given Id");
 
   if (order.status === "CANCELED")
     return res.status(400).send("Order is cancelled");
 
-  order.price.paid = req.body.paid;
+  order.price.paid = parseFloat(order.price.paid) + parseFloat(req.body.paid);
+  if (order.price.paid > order.price.payoutTotal)
+    return res.status(400).send("Amount larger than order total");
   await order.save();
 
   res.status(200).send(order);
 });
 
 router.post("/:id/status", [admin, validateId], async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  let order = await Order.findById(req.params.id);
   if (!order)
     return res.status(404).send("There is no order with the given Id");
 
-  let allowed;
-  switch (req.body.status) {
-    case "CREATED":
-      allowed = ["ORDERED"];
-      break;
-    case "ORDERED":
-      allowed = ["CREATED", "RECEIVED"];
-      break;
-    case "RECEIVED":
-      allowed = ["ORDERED", "SHIPPED"];
-      break;
-    case "SHIPPED":
-      allowed = ["RECEIVED", "ARRIVED"];
-      break;
-    case "ARRIVED":
-      allowed = ["SHIPPED", "COMPLETED"];
-      break;
-    case "COMPLETED":
-      allowed = ["ARRIVED"];
-      break;
-    default:
-      allowed = [];
-      break;
-  }
+  if (order.status === "CANCELED")
+    return res.status(400).send("Order is canceled");
 
-  if (!allowed.includes(order.status) && req.body.status !== "CANCELED")
+  const statuses = [
+    "CREATED",
+    "ORDERED",
+    "RECEIVED",
+    "SHIPPED",
+    "ARRIVED",
+    "COMPLETED",
+  ];
+  const index = statuses.indexOf(order.status);
+  const forward = statuses.indexOf(req.body.status) > index;
+  const allowed = [statuses[index - 1], statuses[index + 1]];
+
+  if (!allowed.includes(req.body.status) && req.body.status !== "CANCELED")
     return res.status(400).send("Wrong status");
 
   order.status = req.body.status;
-  order.statusHistory.push({
-    to: req.body.status,
-    by: req.user._id,
-    at: new Date(),
-  });
+
+  if (forward || req.body.status === "CANCELED") {
+    order.statusHistory.push({
+      to: req.body.status,
+      by: req.user._id,
+      at: new Date(),
+    });
+  } else {
+    order.statusHistory.pop();
+  }
   await order.save();
+
+  order = await Order.findById(order._id)
+    .populate("client createdBy statusHistory.by")
+    .lean();
 
   res.status(200).send(order);
 });

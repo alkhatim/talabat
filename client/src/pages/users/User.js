@@ -67,7 +67,6 @@ const User = () => {
   }, []);
 
   return (
-    <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
           <Breadcrumbs title="Agencies" breadcrumbItem="User" />
@@ -187,7 +186,6 @@ const User = () => {
         </Container>
         {/* container-fluid */}
       </div>
-    </React.Fragment>
   );
 };
 

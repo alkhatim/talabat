@@ -18,7 +18,7 @@ const Orders = () => {
     <div className="page-content">
       <Container fluid>
         <Breadcrumbs title="Orders" breadcrumbItem="All Orders" />
-        <OrdersTable orders={orders} />{" "}
+        <OrdersTable orders={orders} />
       </Container>
     </div>
   );

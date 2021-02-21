@@ -76,7 +76,19 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectID,
     ref: "User",
   },
-  statusHistory: { type: [{ to: String, by: String, at: Date }], default: [] },
+  statusHistory: {
+    type: [
+      {
+        to: String,
+        by: {
+          type: mongoose.Schema.Types.ObjectID,
+          ref: "User",
+        },
+        at: Date,
+      },
+    ],
+    default: [],
+  },
 });
 
 const Order = mongoose.model("Order", schema);

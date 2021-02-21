@@ -16,7 +16,7 @@ import {
 import Select from "react-select";
 import messages from "../../services/messages";
 import Breadcrumbs from "../../components/common/Breadcrumb";
-import validateOrder from "./validation/validateOrder";
+import validateOrder from "./utils/validateOrder";
 import {
   getOrder,
   updateOrder,
@@ -148,7 +148,6 @@ const Order = () => {
   }, []);
 
   return (
-    <React.Fragment>
       <div className="page-content">
         <Container fluid={true}>
           <Breadcrumbs title="Orders" breadcrumbItem="Order" />
@@ -380,7 +379,6 @@ const Order = () => {
         </Container>
         {/* container-fluid */}
       </div>
-    </React.Fragment>
   );
 };
 
