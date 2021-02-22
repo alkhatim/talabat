@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import {
   Card,
   Col,
@@ -28,6 +28,7 @@ import { getClientsLookup } from "../../store/actions/clientActions";
 const Order = () => {
   const params = useParams();
   const location = useLocation();
+  const history = useHistory();
 
   const [order, setOrder] = useState({
     _id: "",
@@ -89,6 +90,7 @@ const Order = () => {
       result = await createOrder(payload);
     }
     if (result) {
+      messages.success("Saved Successfuly");
       setOrder({
         ...result,
         client: {
@@ -100,7 +102,7 @@ const Order = () => {
           label: result.category,
         },
       });
-      messages.success("Saved Successfuly");
+      history.push(`/order/${result._id}/info`);
     }
   };
 

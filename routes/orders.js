@@ -7,13 +7,6 @@ const validateId = require("../middleware/validateId");
 const exchange = require("../helpers/exchange");
 
 router.get("/", async (req, res) => {
-  const orders = await Order.find({ status: { $ne: "CANCELED" } })
-    .populate("client createdBy statusHistory.by")
-    .lean();
-  res.status(200).send(orders);
-});
-
-router.get("/all", async (req, res) => {
   const orders = await Order.find({})
     .populate("client createdBy statusHistory.by")
     .lean();

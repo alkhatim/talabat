@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import {
   Card,
   Col,
@@ -26,6 +26,7 @@ import { getClientOrders } from "../../store/actions/orderActions";
 
 const Client = () => {
   const params = useParams();
+  const history = useHistory();
 
   const [client, setClient] = useState({
     _id: "",
@@ -55,8 +56,9 @@ const Client = () => {
       result = await createClient(payload);
     }
     if (result) {
-      setClient(result);
       messages.success("Saved Successfuly");
+      setClient(result);
+      history.push("/clients");
     }
   };
 
