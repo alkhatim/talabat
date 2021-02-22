@@ -27,6 +27,11 @@ if (NODE_ENV === "production")
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
 
+  app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).send(err);
+  });
+
 app.listen(process.env.NODE_PORT, () =>
   console.log("listening on port", process.env.NODE_PORT)
 );
