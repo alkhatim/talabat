@@ -44,13 +44,15 @@ router.put("/updatepassword", async (req, res) => {
     return res.status(400).send("Passwords don't match");
   }
 
+  let user = await User.findById(req.user._id).lean();
+
   const match = await bcrypt.compare(req.body.oldPassword, user.password);
   if (!match) return res.status(400).send("Wrong password");
 
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(req.body.newPassword, salt);
 
-  const user = await User.findByIdAndUpdate(
+  user = await User.findByIdAndUpdate(
     req.user._id,
     { password },
     { new: true }
