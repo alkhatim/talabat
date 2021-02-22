@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import MetisMenu from "metismenujs";
-import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { FaUser, FaBuilding } from "react-icons/fa";
+import { withRouter, Link as OutterLink } from "react-router-dom";
+import InnerLink from "../common/InnerLink";
 
 const SidebarContent = (props) => {
   useEffect(() => {
@@ -68,47 +67,47 @@ const SidebarContent = (props) => {
       <div id="sidebar-menu">
         <ul className="metismenu list-unstyled" id="side-menu">
           <li>
-            <Link to="/dashboard" className="waves-effect">
+            <InnerLink to="/dashboard" className="waves-effect">
               <i className="bx bx-line-chart"></i>
               <span>Dashboard</span>
-            </Link>
+            </InnerLink>
           </li>
 
           <li>
-            <Link to="/#" className="has-arrow waves-effect">
+            <OutterLink to="/#" className="has-arrow waves-effect">
               <i className="bx bx-receipt"></i>
               <span>Orders</span>
-            </Link>
+            </OutterLink>
             <ul className="sub-menu" aria-expanded="false">
               <li>
-                <Link to="/order">Create Order</Link>
+                <InnerLink to="/order">Create Order</InnerLink>
               </li>
               <li>
-                <Link to="/orders">Orders</Link>
+                <InnerLink to="/orders">Orders</InnerLink>
               </li>
             </ul>
           </li>
 
           <li>
-            <Link to="/#" className="has-arrow waves-effect">
+            <OutterLink to="/#" className="has-arrow waves-effect">
               <i className="bx bx-group"></i>
               <span>Clients</span>
-            </Link>
+            </OutterLink>
             <ul className="sub-menu" aria-expanded="false">
               <li>
-                <Link to="/client">Add Client</Link>
+                <InnerLink to="/client">Add Client</InnerLink>
               </li>
               <li>
-                <Link to="/clients">Clients</Link>
+                <InnerLink to="/clients">Clients</InnerLink>
               </li>
             </ul>
           </li>
 
           {/* <li>
-            <Link to="/profit" className="waves-effect">
+            <OutterLink to="/profit" className="waves-effect">
               <i className="bx bx-dollar"></i>
               <span>Profit</span>
-            </Link>
+            </OutterLink>
           </li> */}
         </ul>
       </div>

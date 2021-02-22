@@ -14,7 +14,6 @@ const Header = () => {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   function tToggle() {
-    dispatch({ type: "TOGGLE_LEFTMENU", payload: !layout.leftMenu });
     if (layout.leftSideBarType === "default") {
       dispatch({
         type: "CHANGE_SIDEBAR_TYPE",
@@ -27,6 +26,7 @@ const Header = () => {
       });
     }
   }
+
   return (
     <>
       <header id="page-topbar">

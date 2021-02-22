@@ -8,7 +8,6 @@ const INIT_STATE = {
   showRightSidebar: false,
   isMobile: false,
   showSidebar: true,
-  leftMenu: false,
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -53,11 +52,6 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         showSidebar: action.payload,
-      };
-    case "TOGGLE_LEFTMENU":
-      return {
-        ...state,
-        leftMenu: action.payload,
       };
 
     default:
