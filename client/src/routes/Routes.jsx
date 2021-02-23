@@ -8,6 +8,8 @@ import Orders from "../pages/orders/Orders";
 import OrderInfo from "../pages/orders/OrderInfo";
 import Client from "../pages/clients/Client";
 import Clients from "../pages/clients/Clients";
+import User from "../pages/users/User";
+import Users from "../pages/users/Users";
 
 const privateRoutes = [
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
@@ -20,6 +22,9 @@ const privateRoutes = [
   { path: "/clients", component: Clients },
   { path: "/client", component: Client },
   { path: "/client/:id", component: Client },
+  { path: "/users", component: Users },
+  { path: "/user", admin: true, component: User },
+  { path: "/user/:id", admin: true, component: User },
 ];
 
 const publicRoutes = [{ path: "/login", component: Login }];

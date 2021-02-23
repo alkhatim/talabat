@@ -92,10 +92,10 @@ const Client = () => {
                 <CardTitle className="mb-5">Client Details</CardTitle>
                 <Form>
                   <FormGroup className="row mb-4">
-                    <Label for="name" className="col-sm-3 col-form-Label">
+                    <Label for="name" className="col-sm-2 col-form-Label">
                       Name
                     </Label>
-                    <Col sm={9}>
+                    <Col sm={8}>
                       <Input
                         type="text"
                         className="form-control"
@@ -107,10 +107,10 @@ const Client = () => {
                     </Col>
                   </FormGroup>
                   <FormGroup className="row mb-4">
-                    <Label for="phone" className="col-sm-3 col-form-Label">
+                    <Label for="phone" className="col-sm-2 col-form-Label">
                       Phone
                     </Label>
-                    <Col sm={9}>
+                    <Col sm={8}>
                       <Input
                         type="text"
                         className="form-control"
@@ -122,10 +122,10 @@ const Client = () => {
                     </Col>
                   </FormGroup>
                   <FormGroup className="row mb-4">
-                    <Label for="address" className="col-sm-3 col-form-Label">
+                    <Label for="address" className="col-sm-2 col-form-Label">
                       Address
                     </Label>
-                    <Col sm={9}>
+                    <Col sm={8}>
                       <Input
                         type="text"
                         className="form-control"

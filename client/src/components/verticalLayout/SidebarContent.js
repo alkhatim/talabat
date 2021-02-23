@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import MetisMenu from "metismenujs";
 import { withRouter, Link as OutterLink } from "react-router-dom";
 import InnerLink from "../common/InnerLink";
 
 const SidebarContent = (props) => {
+  const { role } = useSelector((store) => store.auth.user);
+  
   useEffect(() => {
     const pathName = props.location.pathname;
 
@@ -90,7 +93,7 @@ const SidebarContent = (props) => {
 
           <li>
             <OutterLink to="/#" className="has-arrow waves-effect">
-              <i className="bx bx-group"></i>
+              <i className="bx bxs-user-detail"></i>
               <span>Clients</span>
             </OutterLink>
             <ul className="sub-menu" aria-expanded="false">
@@ -102,6 +105,23 @@ const SidebarContent = (props) => {
               </li>
             </ul>
           </li>
+
+          {role === "admin" && (
+            <li>
+              <OutterLink to="/#" className="has-arrow waves-effect">
+                <i className="bx bx-group"></i>
+                <span>Users</span>
+              </OutterLink>
+              <ul className="sub-menu" aria-expanded="false">
+                <li>
+                  <InnerLink to="/user">Add User</InnerLink>
+                </li>
+                <li>
+                  <InnerLink to="/users">Users</InnerLink>
+                </li>
+              </ul>
+            </li>
+          )}
 
           {/* <li>
             <OutterLink to="/profit" className="waves-effect">

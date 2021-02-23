@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 import Breadcrumbs from "../../components/common/Breadcrumb";
-import UsersTable from "./components/UsersTable";
+import UserCard from "./components/UserCard";
 import { getUsers, deleteUser } from "../../store/actions/userActions";
 
-const AgencyUsers = () => {
+const Users = () => {
   const params = useParams();
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
@@ -15,7 +15,7 @@ const AgencyUsers = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const result = await getUsers(params.id);
+      const result = await getUsers();
       setUsers(result);
     };
     fetch();
@@ -40,9 +40,21 @@ const AgencyUsers = () => {
     <>
       <div className="page-content">
         <Container fluid>
-          <Breadcrumbs title="Agencies" breadcrumbItem="Users" />
+          <Breadcrumbs title="Users" breadcrumbItem="Users" />
 
-          <UsersTable users={users} onDelete={handleDeleteAttemp} />
+          <Row>
+            {users.length ? (
+              users.map((user) => (
+                <UserCard
+                  user={user}
+                  key={user._id}
+                  onDelete={handleDeleteAttemp}
+                />
+              ))
+            ) : (
+              <h4 style={{ padding: 20 }}>No Data</h4>
+            )}
+          </Row>
 
           {/* Delete dialog */}
           {deleteDialog && (
@@ -77,4 +89,4 @@ const AgencyUsers = () => {
   );
 };
 
-export default AgencyUsers;
+export default Users;

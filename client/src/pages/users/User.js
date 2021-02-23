@@ -13,10 +13,12 @@ import {
   Form,
   Input,
 } from "reactstrap";
-import messages from "services/messages";
+import messages from "../../services/messages";
 import SweetAlert from "react-bootstrap-sweetalert";
 import Breadcrumbs from "../../components/common/Breadcrumb";
+import validateUser from "./utils/validateUser";
 import {
+  addUser,
   getUser,
   editUser,
   resetUserPassword,
@@ -31,9 +33,11 @@ const User = () => {
   const [newPassword, setNewPassword] = useState("");
 
   const [user, setUser] = useState({
-    userName: "",
+    _id: "",
+    username: "",
+    phone: "",
     email: "",
-    phoneNumber: "",
+    role: "",
   });
 
   const handleChange = (e) => {
@@ -41,10 +45,18 @@ const User = () => {
   };
 
   const handleSubmit = async () => {
-    const result = await editUser(params.id, user);
+    const { error } = validateUser(user);
+    if (error) return messages.error(error.details[0].message);
+
+    let result;
+    if (user._id) {
+      result = await editUser(params.id, user);
+    } else {
+      result = await addUser(user);
+    }
     if (result) {
       setUser(result);
-      messages.success("Changed Successfuly");
+      messages.success("Saved Successfuly");
     }
   };
 
@@ -63,79 +75,96 @@ const User = () => {
       setUser(result);
     };
     if (location.state?.user) setUser(location.state.user);
-    else fetch();
+    else if (params.id) fetch();
   }, []);
 
   return (
-      <div className="page-content">
-        <Container fluid={true}>
-          <Breadcrumbs title="Agencies" breadcrumbItem="User" />
-          <Row>
-            <Col lg={12}>
-              <Card>
-                <CardBody>
-                  <CardTitle className="mb-5">User Details</CardTitle>
+    <div className="page-content">
+      <Container fluid={true}>
+        <Breadcrumbs title="Users" breadcrumbItem="User" />
+        <Row>
+          <Col lg={12}>
+            <Card>
+              <CardBody>
+                <CardTitle className="mb-5">User Details</CardTitle>
 
-                  <Form>
-                    <FormGroup className="row mb-4">
-                      <Label for="userName" className="col-sm-3 col-form-Label">
-                        Username
-                      </Label>
-                      <Col sm={9}>
-                        <Input
-                          id="userName"
-                          name="userName"
-                          type="text"
-                          className="form-control"
-                          value={user.userName}
-                          onChange={handleChange}
-                        />
-                      </Col>
-                    </FormGroup>
-                    <FormGroup className="row mb-4">
-                      <Label for="email" className="col-sm-3 col-form-Label">
-                        Email
-                      </Label>
-                      <Col sm={9}>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="text"
-                          className="form-control"
-                          value={user.email}
-                          onChange={handleChange}
-                        />
-                      </Col>
-                    </FormGroup>
-                    <FormGroup className="row mb-4">
-                      <Label
-                        for="phoneNumber"
-                        className="col-sm-3 col-form-Label"
+                <Form>
+                  <FormGroup className="row mb-4">
+                    <Label for="username" className="col-sm-2 col-form-Label">
+                      Username
+                    </Label>
+                    <Col sm={8}>
+                      <Input
+                        id="username"
+                        name="username"
+                        type="text"
+                        className="form-control"
+                        value={user.username}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup className="row mb-4">
+                    <Label for="email" className="col-sm-2 col-form-Label">
+                      Email
+                    </Label>
+                    <Col sm={8}>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="text"
+                        className="form-control"
+                        value={user.email}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup className="row mb-4">
+                    <Label for="phone" className="col-sm-2 col-form-Label">
+                      Phone
+                    </Label>
+                    <Col sm={8}>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="text"
+                        className="form-control"
+                        value={user.phone}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </FormGroup>
+
+                  <FormGroup className="row mb-4">
+                    <Label for="role" className="col-sm-2 col-form-Label">
+                      Role
+                    </Label>
+                    <Col sm={8}>
+                      <select
+                        id="role"
+                        name="role"
+                        className="form-control"
+                        value={user.role}
+                        onChange={handleChange}
                       >
-                        Phone
-                      </Label>
-                      <Col sm={9}>
-                        <Input
-                          id="phoneNumber"
-                          name="phoneNumber"
-                          type="text"
-                          className="form-control"
-                          value={user.phoneNumber}
-                          onChange={handleChange}
-                        />
-                      </Col>
-                    </FormGroup>
+                        <option value="">Choose...</option>
+                        <option value="admin">Admin</option>
+                        <option value="agent">Agent</option>
+                      </select>
+                    </Col>
+                  </FormGroup>
 
-                    <FormGroup className="row justify-content-end">
-                      <Col sm={9}>
-                        <div>
-                          <Button
-                            color="success"
-                            className="w-md mr-2"
-                            onClick={handleSubmit}
-                          >
-                            Confirm
-                          </Button>
+                  <FormGroup className="row justify-content-end">
+                    <Col sm={8}>
+                      <div>
+                        <Button
+                          color="success"
+                          className="w-md mr-2"
+                          onClick={handleSubmit}
+                        >
+                          Confirm
+                        </Button>
+                        {user._id && (
                           <Button
                             color="primary"
                             onClick={() => {
@@ -145,47 +174,48 @@ const User = () => {
                           >
                             Reset Password
                           </Button>
-                        </div>
-                      </Col>
-                    </FormGroup>
-                  </Form>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                        )}
+                      </div>
+                    </Col>
+                  </FormGroup>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
 
-          {/* Reset password modal */}
-          <>
-            {resetPasswordModal && (
-              <SweetAlert
-                title="Are you sure?"
-                warning
-                showCancel
-                confirmButtonText="Yes, reset it!"
-                confirmBtnBsStyle="success"
-                cancelBtnBsStyle="danger"
-                onConfirm={handleResetPassword}
-                onCancel={() => setResetPasswordModal(false)}
-              >
-                You won't be able to revert this!
-              </SweetAlert>
-            )}
-            {resetPasswordDialog && (
-              <SweetAlert
-                success
-                title="Password was reset Successfully"
-                onConfirm={() => {
-                  setResetPasswordDialog(false);
-                }}
-              >
-                <h5>New Password: {newPassword}</h5>
-              </SweetAlert>
-            )}
-          </>
-          {/* End of reset password modal */}
-        </Container>
-        {/* container-fluid */}
-      </div>
+        {/* Reset password modal */}
+        <>
+          {resetPasswordModal && (
+            <SweetAlert
+              title="Are you sure?"
+              warning
+              showCancel
+              confirmButtonText="Yes, reset it!"
+              confirmBtnBsStyle="success"
+              cancelBtnBsStyle="danger"
+              onConfirm={handleResetPassword}
+              onCancel={() => setResetPasswordModal(false)}
+            >
+              You won't be able to revert this!
+            </SweetAlert>
+          )}
+          {resetPasswordDialog && (
+            <SweetAlert
+              success
+              title="Password was reset Successfully"
+              onConfirm={() => {
+                setResetPasswordDialog(false);
+              }}
+            >
+              <h5>New Password: {newPassword}</h5>
+            </SweetAlert>
+          )}
+        </>
+        {/* End of reset password modal */}
+      </Container>
+      {/* container-fluid */}
+    </div>
   );
 };
 
