@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: docker build -t ${{ secrets.docker_image }} .
+
+      - name: Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.dockerhub_username }}
+          password: ${{ secrets.dockerhub_password }}
+
+      - name: Push
+        run: docker push ${{ secrets.docker_image }}
+
+      - name: Deploy
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker pull ${{ secrets.docker_image }}
+            docker-compose up -d --build
+            docker system prune -a -f
+          host: ${{ secrets.server }}
+          user: ${{ secrets.user }}
+          key: ${{ secrets.key }}
