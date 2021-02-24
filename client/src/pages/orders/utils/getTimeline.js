@@ -2,7 +2,7 @@ const timelines = {
   ORDERED: "bx-copy-alt",
   RECEIVED: "bx-package",
   SHIPPED: "bxs-plane-take-off",
-  ARRIVED: "bx-location-plus",
+  ARRIVED: "bxs-plane-land",
   COMPLETED: "bx-badge-check",
 };
 

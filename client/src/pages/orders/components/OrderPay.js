@@ -17,10 +17,10 @@ const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
       <CardBody>
         <h4 className="card-title mb-4">Payment</h4>
         <Row className="mb-4">
-          <Col lg={6}>
+          <Col lg={4}>
             <div>
               <p className="text-muted mb-4">
-                <i className="mdi mdi-wallet mr-1" /> Total Payment Amount
+                <i className="mdi mdi-wallet mr-1" /> Total Amount
               </p>
               <h5>
                 {order.price.payoutTotal?.toLocaleString("en-US", {
@@ -30,13 +30,28 @@ const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
               </h5>
             </div>
           </Col>
-          <Col lg={6}>
+          <Col lg={4}>
             <div>
               <p className="text-muted mb-4">
                 <i className="mdi mdi-wallet mr-1" /> Currently Paid
               </p>
               <h5>
                 {order.price.paid?.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: order.price.payoutCurrency,
+                })}
+              </h5>
+            </div>
+          </Col>
+          <Col lg={4}>
+            <div>
+              <p className="text-muted mb-4">
+                <i className="mdi mdi-wallet mr-1" /> Remaining Amount
+              </p>
+              <h5>
+                {(
+                  order.price.payoutTotal - order.price.paid || ""
+                )?.toLocaleString("en-US", {
                   style: "currency",
                   currency: order.price.payoutCurrency,
                 })}
@@ -66,8 +81,8 @@ const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
           </InputGroup>
         </div>
 
-        <Row className="mb-4">
-          <Col lg={6} className="text-right">
+        <Row>
+          <Col lg={6} className="mb-4 text-center">
             <Button
               type="button"
               color="success"
@@ -77,7 +92,7 @@ const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
               Add Payment
             </Button>
           </Col>
-          <Col lg={6} className="text-left">
+          <Col lg={6} className="mb-4 text-center">
             <Button
               type="button"
               color="danger"

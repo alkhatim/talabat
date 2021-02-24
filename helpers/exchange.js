@@ -3,27 +3,27 @@ module.exports = (price, from, to, rate) => {
 
   switch (from) {
     case "USD":
-      usd = price;
+      usd = parseFloat(price);
     case "SDG":
-      usd = price / rate.SDG;
+      usd = parseFloat(price / rate.SDG);
     case "AED":
-      usd = price / rate.AED;
+      usd = parseFloat(price / rate.AED);
     case "SAR":
-      usd = price / rate.SAR;
+      usd = parseFloat(price / rate.SAR);
     default:
-      usd = price;
+      usd = parseFloat(price);
   }
 
   switch (to) {
     case "USD":
-      return usd;
+      return parseFloat(usd);
     case "SDG":
-      return usd * rate.SDG;
+      return parseFloat(usd * rate.SDG);
     case "AED":
-      return usd * rate.AED;
+      return parseFloat(usd * rate.AED);
     case "SAR":
-      return usd * rate.SAR;
+      return parseFloat(usd * rate.SAR);
     default:
-      return usd;
+      return parseFloat(usd);
   }
 };
