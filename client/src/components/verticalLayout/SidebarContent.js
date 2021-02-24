@@ -6,7 +6,7 @@ import InnerLink from "../common/InnerLink";
 
 const SidebarContent = (props) => {
   const { role } = useSelector((store) => store.auth.user);
-  
+
   useEffect(() => {
     const pathName = props.location.pathname;
 
@@ -120,6 +120,15 @@ const SidebarContent = (props) => {
                   <InnerLink to="/users">Users</InnerLink>
                 </li>
               </ul>
+            </li>
+          )}
+
+          {role === "admin" && (
+            <li>
+              <InnerLink to="/settings" className="waves-effect">
+                <i className="bx bx-wrench"></i>
+                <span>Settings</span>
+              </InnerLink>
             </li>
           )}
 

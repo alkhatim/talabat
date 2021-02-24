@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { Category } = require("../models/Category");
 const validateId = require("../middleware/validateId");
+const admin = require("../middleware/admin");
 
 router.get("/", async (req, res) => {
   const categories = await Category.find({}).lean();
   res.status(200).send(categories);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const category = new Category(req.body);
 
   await category.save();

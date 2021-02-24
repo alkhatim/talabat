@@ -1,10 +1,18 @@
 import { memo } from "react";
+import { useSelector } from "react-redux";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import getTimeline from "../utils/getTimeline";
 
 const OrderTimeline = memo(({ order, handleStatusUpdate }) => {
+  const { role } = useSelector((store) => store.auth.user);
+
   const statuses = order._id ? getTimeline(order) : [];
   const activeId = statuses.find((item) => item.active)?.id;
+
+  const handleClick = (status) => {
+    if ([activeId + 1, activeId - 1].includes(status.id) && role === "admin")
+      handleStatusUpdate(status.statusTitle.toUpperCase());
+  };
 
   return (
     <Card>
@@ -25,17 +33,12 @@ const OrderTimeline = memo(({ order, handleStatusUpdate }) => {
                 </div>
                 <div
                   className={`media ${
-                    [activeId + 1, activeId - 1].includes(status.id)
+                    [activeId + 1, activeId - 1].includes(status.id) &&
+                    role === "admin"
                       ? "hand"
                       : ""
                   }`}
-                  onClick={
-                    [activeId + 1, activeId - 1].includes(status.id)
-                      ? () => {
-                          handleStatusUpdate(status.statusTitle.toUpperCase());
-                        }
-                      : () => {}
-                  }
+                  onClick={() => handleClick(status)}
                 >
                   <div className="mr-3">
                     <i className={status.iconClass} />

@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import messages from "../../services/messages";
 import Breadcrumbs from "../../components/common/Breadcrumb";
+import { useSelector } from "react-redux";
 import {
   getOrder,
   updateOrderStatus,
@@ -14,6 +15,7 @@ import OrderPay from "./components/OrderPay";
 const Order = () => {
   const params = useParams();
   const location = useLocation();
+  const { role } = useSelector((store) => store.auth.user);
 
   const [order, setOrder] = useState({
     _id: "",
@@ -79,21 +81,23 @@ const Order = () => {
       <Container fluid={true}>
         <Breadcrumbs title="Order Info" breadcrumbItem="Orders" />
         <Row>
-          <Col lg="6">
+          <Col lg={role === "admin" ? "6" : "12"}>
             <OrderTimeline
               order={order}
               handleStatusUpdate={handleStatusUpdate}
             />
           </Col>
-          <Col lg="6">
-            <OrderPay
-              order={order}
-              paid={paid}
-              onPaidChange={handlePaidChange}
-              onPay={handlePay}
-              onCancel={handleCancel}
-            />
-          </Col>
+          {role === "admin" && (
+            <Col lg="6">
+              <OrderPay
+                order={order}
+                paid={paid}
+                onPaidChange={handlePaidChange}
+                onPay={handlePay}
+                onCancel={handleCancel}
+              />
+            </Col>
+          )}
         </Row>
       </Container>
       {/* container-fluid */}

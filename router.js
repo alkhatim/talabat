@@ -5,11 +5,13 @@ const ordersRouter = require("./routes/orders");
 const usersRouter = require("./routes/users");
 const clientsRouter = require("./routes/clients");
 const categoriesRouter = require("./routes/categories");
+const ratesRouter = require("./routes/rates");
 
 router.use(auth);
 router.use("/orders", ordersRouter);
 router.use("/users", usersRouter);
 router.use("/clients", clientsRouter);
 router.use("/categories", categoriesRouter);
+router.use("/rates", ratesRouter);
 
 module.exports = router;

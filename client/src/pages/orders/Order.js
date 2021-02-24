@@ -22,7 +22,7 @@ import {
   updateOrder,
   createOrder,
 } from "../../store/actions/orderActions";
-import { getCategories } from "../../store/actions/categoryActions";
+import { getCategories } from "../../store/actions/configActions";
 import { getClientsLookup } from "../../store/actions/clientActions";
 
 const Order = () => {

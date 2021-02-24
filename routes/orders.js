@@ -3,13 +3,19 @@ const express = require("express");
 const router = express.Router();
 const admin = require("../middleware/admin");
 const { Order, validate } = require("../models/Order");
+const { Client } = require("../models/Client");
 const validateId = require("../middleware/validateId");
 const exchange = require("../helpers/exchange");
 
 router.get("/", async (req, res) => {
-  const orders = await Order.find({})
+  let orders = await Order.find({})
     .populate("client createdBy statusHistory.by")
     .lean();
+  if (req.user.role !== "admin")
+    orders = orders.filter(
+      (order) =>
+        order.client.createdBy._id.toString() === req.user._id.toString()
+    );
   res.status(200).send(orders);
 });
 
@@ -17,10 +23,24 @@ router.get("/:id", validateId, async (req, res) => {
   const order = await Order.findById(req.params.id)
     .populate("client createdBy statusHistory.by")
     .lean();
+
+  if (
+    !order ||
+    (req.user.role !== "admin" &&
+      order.client.createdBy._id.toString() !== req.user._id.toString())
+  )
+    return res.status(404).send("Order not found");
   res.status(200).send(order);
 });
 
 router.get("/client/:id", validateId, async (req, res) => {
+  const client = await Client.findById(req.params.id);
+  if (
+    req.user.role !== "admin" &&
+    client.createdBy.toString() !== req.user._id.toString()
+  )
+    return res.status(400).send("You must be an admin");
+
   const orders = await Order.find({ client: req.params.id })
     .populate("client createdBy statusHistory.by")
     .lean();
@@ -162,13 +182,6 @@ router.post("/:id/status", [admin, validateId], async (req, res) => {
     .lean();
 
   res.status(200).send(order);
-});
-
-router.get("/client/:id", async (req, res) => {
-  const orders = await Order.find({ client: req.params.id })
-    .populate("client createdBy")
-    .lean();
-  res.status(200).send(orders);
 });
 
 module.exports = router;

@@ -27,3 +27,21 @@ export const deleteCategory = async (id) => {
     messages.error(error);
   }
 };
+
+export const getRates = async () => {
+  try {
+    const { data } = await http.get(`/api/v1/rates`);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};
+
+export const updateRates = async (rates) => {
+  try {
+    const { data } = await http.post(`/api/v1/rates`, rates);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};

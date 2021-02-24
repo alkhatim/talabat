@@ -146,7 +146,6 @@ const UserProfile = () => {
               </FormGroup>
               <div className="text-center mt-4">
                 <Button
-                  type="submit"
                   color="success"
                   className="mr-2"
                   onClick={handleUpdateProfile}

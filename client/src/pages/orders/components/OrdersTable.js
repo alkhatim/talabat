@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import paginationFactory, {
   PaginationListStandalone,
@@ -11,6 +12,7 @@ const PAGE_SIZE = 8;
 
 const OrdersTable = ({ orders }) => {
   const [data, setData] = useState([]);
+  const { role } = useSelector((store) => store.auth.user);
 
   useEffect(() => {
     handleFilter("", { page: 1, searchText: "" });
@@ -73,16 +75,18 @@ const OrdersTable = ({ orders }) => {
               <i className="bx bx-info-circle" />
             </Link>
           </li>
-          <li className="list-inline-item px-2">
-            <Link
-              to={{
-                pathname: `/order/${order._id}`,
-                state: { order },
-              }}
-            >
-              <i className="bx bxs-edit" />
-            </Link>
-          </li>
+          {role === "admin" && (
+            <li className="list-inline-item px-2">
+              <Link
+                to={{
+                  pathname: `/order/${order._id}`,
+                  state: { order },
+                }}
+              >
+                <i className="bx bxs-edit" />
+              </Link>
+            </li>
+          )}
         </ul>
       ),
     },
