@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/alkhatim/ems#readme",
   "dependencies": {
+    "aws-sdk": "^2.852.0",
     "bcrypt": "^5.0.0",
     "concurrently": "^5.3.0",
     "express": "^4.17.1",

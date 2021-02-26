@@ -16,9 +16,9 @@ mongoose
   .then(() => console.log("connected to database"))
   .catch((e) => console.error(e));
 
-  if (NODE_ENV === "production") app.use(express.static("client/build"));
+if (NODE_ENV === "production") app.use(express.static("client/build"));
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", router);
 
@@ -27,10 +27,10 @@ if (NODE_ENV === "production")
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
 
-  app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(500).send(err);
-  });
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send(err);
+});
 
 app.listen(process.env.NODE_PORT, () =>
   console.log("listening on port", process.env.NODE_PORT)

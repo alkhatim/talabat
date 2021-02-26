@@ -321,7 +321,7 @@ const Order = () => {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label for="profit">{"Profit ($)"}</Label>
+                        <Label for="profit">Profit</Label>
                         <Input
                           id="profit"
                           name="profit"

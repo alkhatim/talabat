@@ -69,7 +69,7 @@ router.post("/", async (req, res) => {
     exchange(itemPrice, itemCurrency, payoutCurrency, rate) +
     exchange(deliveryPrice, itemCurrency, payoutCurrency, rate) +
     exchange(shippingPrice, itemCurrency, payoutCurrency, rate) +
-    exchange(profit, "USD", payoutCurrency, rate);
+    exchange(profit, itemCurrency, payoutCurrency, rate);
 
   req.body.createdBy = req.user._id;
   req.body.price.payoutTotal = payoutTotal;
@@ -110,7 +110,7 @@ router.put("/:id", validateId, async (req, res) => {
     exchange(itemPrice, itemCurrency, payoutCurrency, rate) +
     exchange(deliveryPrice, itemCurrency, payoutCurrency, rate) +
     exchange(shippingPrice, itemCurrency, payoutCurrency, rate) +
-    exchange(profit, "USD", payoutCurrency, rate);
+    exchange(profit, itemCurrency, payoutCurrency, rate);
 
   req.body.price.payoutTotal = payoutTotal;
   req.body.updatedBy = req.user._id;

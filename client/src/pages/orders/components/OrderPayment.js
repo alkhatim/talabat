@@ -11,9 +11,9 @@ import {
   InputGroup,
 } from "reactstrap";
 
-const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
+const OrderPayment = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
   return (
-    <Card>
+    <Card style={{ minHeight: "60vh" }}>
       <CardBody>
         <h4 className="card-title mb-4">Payment</h4>
         <Row className="mb-4">
@@ -108,4 +108,4 @@ const OrderPay = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
   );
 });
 
-export default OrderPay;
+export default OrderPayment;

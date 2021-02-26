@@ -10,7 +10,7 @@ import {
   Input,
 } from "reactstrap";
 
-const CategoriesFourm = ({ category, onCategoryChange, onCreate }) => {
+const CategoriesForm = ({ category, onCategoryChange, onCreate }) => {
   return (
     <Col lg={12}>
       <Card>
@@ -47,4 +47,4 @@ const CategoriesFourm = ({ category, onCategoryChange, onCreate }) => {
   );
 };
 
-export default CategoriesFourm;
+export default CategoriesForm;

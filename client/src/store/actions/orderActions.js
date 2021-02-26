@@ -69,3 +69,40 @@ export const payOrder = async (id, paid) => {
     messages.error(error);
   }
 };
+
+export const uploadFile = async (file) => {
+  try {
+    const { data } = await http.post("/api/v1/files", file);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};
+
+export const getFiles = async (id) => {
+  try {
+    const { data } = await http.get(`/api/v1/files/${id}`);
+    return data;
+  } catch (error) {
+    messages.error(error);
+    return [];
+  }
+};
+
+export const getFile = async (id) => {
+  try {
+    const { data } = await http.get(`/api/v1/files/link/${id}`);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};
+
+export const deleteFile = async (id) => {
+  try {
+    const { data } = await http.delete(`/api/v1/files/${id}`);
+    return data;
+  } catch (error) {
+    messages.error(error);
+  }
+};
