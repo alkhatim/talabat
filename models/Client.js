@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone2: String,
   address: String,
   createdAt: {
     type: Date,
@@ -29,8 +30,9 @@ const Client = mongoose.model("Client", schema);
 const validate = function (client) {
   const schema = Joi.object()
     .keys({
-      name: Joi.string().min(3).max(30).required(),
+      name: Joi.string().min(3).max(50).required(),
       phone: Joi.string().min(8).max(12).required(),
+      phone2: Joi.string().min(8).max(12).allow(""),
       address: Joi.string().allow(""),
     })
     .unknown(true);

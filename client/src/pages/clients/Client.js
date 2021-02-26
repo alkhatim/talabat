@@ -32,6 +32,7 @@ const Client = () => {
     _id: "",
     name: "",
     phone: "",
+    phone2: "",
     address: "",
   });
   const [orders, setOrders] = useState([]);
@@ -117,6 +118,21 @@ const Client = () => {
                         id="phone"
                         name="phone"
                         value={client.phone}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup className="row mb-4">
+                    <Label for="phone2" className="col-sm-2 col-form-Label">
+                      Second Phone
+                    </Label>
+                    <Col sm={8}>
+                      <Input
+                        type="text"
+                        className="form-control"
+                        id="phone2"
+                        name="phone2"
+                        value={client.phone2}
                         onChange={handleChange}
                       />
                     </Col>
