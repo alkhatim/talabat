@@ -12,10 +12,10 @@ export default memo(({ status }) => {
       <CardBody>
         <CardTitle className="mb-4">Orders by Status</CardTitle>
         <Row>
-          <Col lg={5}>
+          <Col xs={5}>
             <i className="bx bx-package text-primary display-4" />
           </Col>
-          <Col lg={7}>
+          <Col xs={7}>
             <h3>{total || 0}</h3>
             <h5>Total Number of Orders</h5>
           </Col>

@@ -28,13 +28,13 @@ const Dashboard = () => {
         <Container fluid>
           <h4>Dashboard</h4>
           <Row>
-            <Col lg={4}>
+            <Col xl={4} lg={6}>
               <Notifications notifications={notifications} />
             </Col>
-            <Col lg={4}>
+            <Col xl={4} lg={6}>
               <StatusReport status={status} />
             </Col>
-            <Col lg={4}>
+            <Col xl={4} lg={6}>
               <CategoriesReport categories={categories} />
             </Col>
           </Row>

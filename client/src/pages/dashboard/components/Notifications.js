@@ -9,7 +9,7 @@ export default memo(({ notifications }) => {
   if (notifications.lateOrders)
     data.push({
       title: "Late Orders",
-      message: `${notifications.lateOrders} orders are taking to long to arrive to the client!`,
+      message: `${notifications.lateOrders} orders are taking too long to arrive to the client!`,
       icon: "bx bx-time-five text-danger bx-md",
     });
   if (notifications.receivedOrders)
