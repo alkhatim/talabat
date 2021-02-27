@@ -43,9 +43,9 @@ const Settings = () => {
   const handleCategoryCreate = async () => {
     const result = await createCategory(category);
     if (result) {
+      setCategory({ name: "" });
       messages.success("Added Successfully");
       setCategories(categories.concat(result));
-      setCategory("");
     }
   };
 
