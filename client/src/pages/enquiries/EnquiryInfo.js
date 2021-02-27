@@ -3,76 +3,48 @@ import { useParams, useLocation } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import messages from "../../services/messages";
 import Breadcrumbs from "../../components/common/Breadcrumb";
-import { useSelector } from "react-redux";
 import {
-  getOrder,
-  updateOrderStatus,
-  payOrder,
+  getEnquiry,
+  addComment,
   getFile,
   getFiles,
   deleteFile,
   uploadFile,
-} from "../../store/actions/orderActions";
-import OrderTimeline from "./components/OrderTimeline";
-import OrderPayment from "./components/OrderPayment";
+} from "../../store/actions/enquiryActions";
+import EnquiryComments from "./components/EnquiryComments";
 import FilesTable from "./components/FilesTable";
 import FileForm from "./components/FileForm";
 
-const OrderInfo = () => {
+const EnquiryInfo = () => {
   const params = useParams();
   const location = useLocation();
-  const { role } = useSelector((store) => store.auth.user);
 
-  const [order, setOrder] = useState({
+  const [enquiry, setEnquiry] = useState({
     _id: "",
     client: "",
-    orderNumber: "",
-    category: "",
+    phone: "",
     description: "",
-    delivery: "",
-    address: "",
+    contactMethod: "",
+    contactAccount: "",
     notes: "",
     link: "",
-    isUrgent: false,
-    price: {
-      itemPrice: "",
-      deliveryPrice: "",
-      shippingPrice: "",
-      itemCurrency: "",
-      profit: "",
-      payoutCurrency: "",
-    },
+    comments: [],
   });
+
   const [files, setFiles] = useState([]);
   const [newFile, setNewFile] = useState({ name: "", mime: "", data: "" });
-  const [paid, setPaid] = useState("");
+  const [newComment, setNewComment] = useState("");
 
-  const handleCancel = async () => {
-    const result = await updateOrderStatus(params.id, "CANCELED");
+  const handleAddComment = async () => {
+    const result = await addComment(params.id, { comment: newComment });
     if (result) {
-      setOrder(result);
-      messages.success("Canceled Successfuly");
+      setEnquiry(result);
+      setNewComment("");
     }
   };
 
-  const handleStatusUpdate = async (newStatus) => {
-    const result = await updateOrderStatus(params.id, newStatus);
-    if (result) {
-      setOrder(result);
-      messages.success("Updated Successfuly");
-    }
-  };
-
-  const handlePay = async () => {
-    const result = await payOrder(params.id, paid);
-    if (result) {
-      setOrder(result);
-      messages.success("Updated Successfuly");
-    }
-  };
-
-  const handlePaidChange = (e) => {
-    setPaid(e.target.value);
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
   };
 
   const handleFileDelete = async (id) => {
@@ -111,17 +83,17 @@ const OrderInfo = () => {
   };
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      const result = await getOrder(params.id);
-      if (result) setOrder(result);
+    const fetchEnquiry = async () => {
+      const result = await getEnquiry(params.id);
+      if (result) setEnquiry(result);
     };
     const fetchFiles = async () => {
       const result = await getFiles(params.id);
       if (result) setFiles(result);
     };
-    if (location.state?.order) setOrder(location.state.order);
+    if (location.state?.enquiry) setEnquiry(location.state.enquiry);
     else if (params.id) {
-      fetchOrder();
+      fetchEnquiry();
     }
     if (params.id) fetchFiles();
   }, []);
@@ -129,32 +101,14 @@ const OrderInfo = () => {
   return (
     <div className="page-content">
       <Container fluid={true}>
-        <Breadcrumbs title="Orders" breadcrumbItem="Order Info" />
-        <Row>
-          <Col lg={role === "admin" ? "6" : "12"}>
-            <OrderTimeline
-              order={order}
-              handleStatusUpdate={handleStatusUpdate}
-            />
-          </Col>
-          {role === "admin" && (
-            <Col lg="6">
-              <OrderPayment
-                order={order}
-                paid={paid}
-                onPaidChange={handlePaidChange}
-                onPay={handlePay}
-                onCancel={handleCancel}
-              />
-            </Col>
-          )}
-        </Row>
+        <Breadcrumbs title="Enquiries" breadcrumbItem="Enquiry Info" />
         <Row>
           <Col lg={6}>
             <FileForm
               file={newFile}
               onFileChange={handleFileChange}
               onUpload={handleUpload}
+              style={{ minHeight: "50vh" }}
             />
           </Col>
           <Col lg={6}>
@@ -165,10 +119,20 @@ const OrderInfo = () => {
             />
           </Col>
         </Row>
+        <Row>
+          <Col lg={12}>
+            <EnquiryComments
+              enquiry={enquiry}
+              onCommentChange={handleCommentChange}
+              onAddComment={handleAddComment}
+              newComment={newComment}
+            />
+          </Col>
+        </Row>
       </Container>
       {/* container-fluid */}
     </div>
   );
 };
 
-export default OrderInfo;
+export default EnquiryInfo;

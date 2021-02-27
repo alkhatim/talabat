@@ -4,6 +4,7 @@ import auth from "./reducers/authReducer";
 import dashboard from "./reducers/dashboardReducer";
 import orders from "./reducers/ordersReducer";
 import clients from "./reducers/clientsReducer";
+import enquiries from "./reducers/enquiriesReducer";
 
 const rootReducer = combineReducers({
   layout,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   dashboard,
   orders,
   clients,
+  enquiries,
 });
 
 export default rootReducer;

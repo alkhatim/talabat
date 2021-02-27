@@ -6,6 +6,9 @@ import Profile from "../pages/auth/Profile";
 import Order from "../pages/orders/Order";
 import Orders from "../pages/orders/Orders";
 import OrderInfo from "../pages/orders/OrderInfo";
+import Enquiry from "../pages/enquiries/Enquiry";
+import Enquiries from "../pages/enquiries/Enquiries";
+import EnquiryInfo from "../pages/enquiries/EnquiryInfo";
 import Client from "../pages/clients/Client";
 import Clients from "../pages/clients/Clients";
 import User from "../pages/users/User";
@@ -20,6 +23,10 @@ const privateRoutes = [
   { path: "/order", admin: true, component: Order },
   { path: "/order/:id", admin: true, component: Order },
   { path: "/order/:id/info", component: OrderInfo },
+  { path: "/enquiries", component: Enquiries },
+  { path: "/enquiry", component: Enquiry },
+  { path: "/enquiry/:id", component: Enquiry },
+  { path: "/enquiry/:id/info", component: EnquiryInfo },
   { path: "/clients", component: Clients },
   { path: "/client", component: Client },
   { path: "/client/:id", component: Client },

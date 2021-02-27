@@ -9,7 +9,7 @@ export const getClients = () => async (dispatch) => {
       type: "CLIENTS_LOADED",
       payload: data.map((client) => ({
         ...client,
-        createdAt: new Date(client.createdAt).toLocaleDateString(),
+        createdAt: new Date(client.createdAt).toLocaleString(),
       })),
     });
   } catch (error) {

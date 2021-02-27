@@ -1,14 +1,14 @@
 import http from "../../services/http";
 import messages from "../../services/messages";
 
-export const getOrders = () => async (dispatch) => {
+export const getEnquiries = () => async (dispatch) => {
   try {
-    const { data } = await http.get("/api/v1/orders");
+    const { data } = await http.get("/api/v1/enquiries");
     dispatch({
-      type: "ORDERS_LOADED",
-      payload: data.map((order) => ({
-        ...order,
-        createdAt: new Date(order.createdAt).toLocaleString(),
+      type: "ENQUIRIES_LOADED",
+      payload: data.map((enquiry) => ({
+        ...enquiry,
+        createdAt: new Date(enquiry.createdAt).toLocaleString(),
       })),
     });
   } catch (error) {
@@ -16,57 +16,48 @@ export const getOrders = () => async (dispatch) => {
   }
 };
 
-export const getOrder = async (id) => {
+export const getEnquiry = async (id) => {
   try {
-    const { data } = await http.get(`/api/v1/orders/${id}`);
+    const { data } = await http.get(`/api/v1/enquiries/${id}`);
     return data;
   } catch (error) {
     messages.error(error);
   }
 };
 
-export const getClientOrders = async (id) => {
+export const createEnquiry = async (enquiry) => {
   try {
-    const { data } = await http.get(`/api/v1/orders/client/${id}`);
-    return data.map((order) => ({
-      ...order,
-      createdAt: new Date(order.createdAt).toLocaleString(),
-    }));
-  } catch (error) {
-    messages.error(error);
-  }
-};
-
-export const createOrder = async (order) => {
-  try {
-    const { data } = await http.post("/api/v1/orders", order);
+    const { data } = await http.post("/api/v1/enquiries", enquiry);
     return data;
   } catch (error) {
     messages.error(error);
   }
 };
 
-export const updateOrder = async (id, order) => {
+export const updateEnquiry = async (id, enquiry) => {
   try {
-    const { data } = await http.put(`/api/v1/orders/${id}`, order);
+    const { data } = await http.put(`/api/v1/enquiries/${id}`, enquiry);
     return data;
   } catch (error) {
     messages.error(error);
   }
 };
 
-export const updateOrderStatus = async (id, status) => {
+export const addComment = async (id, comment) => {
   try {
-    const { data } = await http.post(`/api/v1/orders/${id}/status`, { status });
+    const { data } = await http.post(
+      `/api/v1/enquiries/${id}/comment`,
+      comment
+    );
     return data;
   } catch (error) {
     messages.error(error);
   }
 };
 
-export const payOrder = async (id, paid) => {
+export const deleteComment = async (id) => {
   try {
-    const { data } = await http.post(`/api/v1/orders/${id}/pay`, { paid });
+    const { data } = await http.delete(`/api/v1/enquiries/${id}/comment`);
     return data;
   } catch (error) {
     messages.error(error);

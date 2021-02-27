@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["agent", "admin"],
+    enum: ["agent", "admin", "cs"],
   },
   createdAt: {
     type: Date,
@@ -46,10 +46,10 @@ const validate = function (user) {
   const schema = Joi.object()
     .keys({
       _id: Joi.string().min(24).max(24).allow(""),
-      username: Joi.string().min(3).max(50).required(),
+      username: Joi.string().min(3).required(),
       phone: Joi.string().min(8).max(12).required(),
       email: Joi.string().required(),
-      role: Joi.string().valid("agent", "admin").required(),
+      role: Joi.string().valid("agent", "admin", "cs").required(),
     })
     .unknown(false);
 

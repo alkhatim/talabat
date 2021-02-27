@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { Client, validate } = require("../models/Client");
+const agent = require("../middleware/agent");
 const admin = require("../middleware/admin");
 const validateId = require("../middleware/validateId");
 
+router.use(agent);
+
 router.get("/", async (req, res) => {
   const query = {};
-  if (req.user.role === "agent") query.createdBy = req.user._id;
+  if (req.user.role !== "admin") query.createdBy = req.user._id;
 
   const clients = await Client.find(query).populate("createdBy").lean();
   res.status(200).send(clients);
@@ -14,7 +17,7 @@ router.get("/", async (req, res) => {
 
 router.get("/lookup", async (req, res) => {
   const query = {};
-  if (req.user.role === "agent") query.createdBy = req.user._id;
+  if (req.user.role !== "admin") query.createdBy = req.user._id;
 
   const clients = await Client.find(query).select("name").lean();
   res.status(200).send(clients);
@@ -22,9 +25,10 @@ router.get("/lookup", async (req, res) => {
 
 router.get("/:id", validateId, async (req, res) => {
   const query = { _id: req.params.id };
-  if (req.user.role === "agent") query.createdBy = req.user._id;
+  if (req.user.role !== "admin") query.createdBy = req.user._id;
 
   const client = await Client.findOne(query).populate("createdBy").lean();
+  if (!client) return res.status(404).send("No client with the given Id");
   res.status(200).send(client);
 });
 
@@ -42,7 +46,7 @@ router.post("/", admin, async (req, res) => {
 
 router.put("/:id", validateId, async (req, res) => {
   const query = { _id: req.params.id };
-  if (req.user.role === "agent") query.createdBy = req.user._id;
+  if (req.user.role !== "admin") query.createdBy = req.user._id;
 
   let client = await Client.findOne(query);
   if (!client)
@@ -60,9 +64,9 @@ router.put("/:id", validateId, async (req, res) => {
   res.status(200).send(client);
 });
 
-router.delete("/:id", [admin, validateId], async (req, res) => {
+router.delete("/:id", validateId, async (req, res) => {
   const query = { _id: req.params.id };
-  if (req.user.role === "agent") query.createdBy = req.user._id;
+  if (req.user.role !== "admin") query.createdBy = req.user._id;
 
   const client = await Client.findOneAndDelete(query).lean();
   if (!client)

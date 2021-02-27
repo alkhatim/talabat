@@ -27,7 +27,7 @@ export default (order) => {
       id: id++,
       statusTitle: status,
       iconClass: "bx bx-block h2 text-primary",
-      description: `${new Date(history.at).toLocaleDateString()}  ,  ${
+      description: `${new Date(history.at).toLocaleString()}  ,  ${
         history.by.username
       }`,
     });
@@ -39,7 +39,7 @@ export default (order) => {
     iconClass: `bx bxs-cart-add h2 ${
       status === "CANCELED" ? "text-muted" : "text-primary"
     }`,
-    description: `${new Date(order.createdAt).toLocaleDateString()}  ,  ${
+    description: `${new Date(order.createdAt).toLocaleString()}  ,  ${
       order.createdBy.username
     }`,
   });
@@ -54,7 +54,7 @@ export default (order) => {
       id: id++,
       statusTitle: item,
       iconClass: `bx ${timelines[item]} text-primary h2`,
-      description: `${new Date(history.at).toLocaleDateString()}  ,  ${
+      description: `${new Date(history.at).toLocaleString()}  ,  ${
         history.by.username
       }`,
     });

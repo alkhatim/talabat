@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { Category } = require("../models/Category");
 const validateId = require("../middleware/validateId");
+const agent = require("../middleware/agent");
 const admin = require("../middleware/admin");
+
+router.use(agent);
 
 router.get("/", async (req, res) => {
   const categories = await Category.find({}).lean();

@@ -76,35 +76,54 @@ const SidebarContent = (props) => {
             </InnerLink>
           </li>
 
+          {["admin", "agent"].includes(role) && (
+            <li>
+              <OutterLink to="/#" className="has-arrow waves-effect">
+                <i className="bx bx-receipt"></i>
+                <span>Orders</span>
+              </OutterLink>
+              <ul className="sub-menu" aria-expanded="false">
+                <li>
+                  <InnerLink to="/order">Create Order</InnerLink>
+                </li>
+                <li>
+                  <InnerLink to="/orders">Orders</InnerLink>
+                </li>
+              </ul>
+            </li>
+          )}
+
           <li>
             <OutterLink to="/#" className="has-arrow waves-effect">
-              <i className="bx bx-receipt"></i>
-              <span>Orders</span>
+              <i className="bx bx-message-alt-detail"></i>
+              <span>Enquiries</span>
             </OutterLink>
             <ul className="sub-menu" aria-expanded="false">
               <li>
-                <InnerLink to="/order">Create Order</InnerLink>
+                <InnerLink to="/enquiry">Add Enquiry</InnerLink>
               </li>
               <li>
-                <InnerLink to="/orders">Orders</InnerLink>
+                <InnerLink to="/enquiries">Enquiries</InnerLink>
               </li>
             </ul>
           </li>
 
-          <li>
-            <OutterLink to="/#" className="has-arrow waves-effect">
-              <i className="bx bxs-user-detail"></i>
-              <span>Clients</span>
-            </OutterLink>
-            <ul className="sub-menu" aria-expanded="false">
-              <li>
-                <InnerLink to="/client">Add Client</InnerLink>
-              </li>
-              <li>
-                <InnerLink to="/clients">Clients</InnerLink>
-              </li>
-            </ul>
-          </li>
+          {["admin", "agent"].includes(role) && (
+            <li>
+              <OutterLink to="/#" className="has-arrow waves-effect">
+                <i className="bx bxs-user-detail"></i>
+                <span>Clients</span>
+              </OutterLink>
+              <ul className="sub-menu" aria-expanded="false">
+                <li>
+                  <InnerLink to="/client">Add Client</InnerLink>
+                </li>
+                <li>
+                  <InnerLink to="/clients">Clients</InnerLink>
+                </li>
+              </ul>
+            </li>
+          )}
 
           {role === "admin" && (
             <li>
@@ -131,13 +150,6 @@ const SidebarContent = (props) => {
               </InnerLink>
             </li>
           )}
-
-          {/* <li>
-            <OutterLink to="/profit" className="waves-effect">
-              <i className="bx bx-dollar"></i>
-              <span>Profit</span>
-            </OutterLink>
-          </li> */}
         </ul>
       </div>
     </>

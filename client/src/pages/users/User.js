@@ -150,6 +150,7 @@ const User = () => {
                         <option value="">Choose...</option>
                         <option value="admin">Admin</option>
                         <option value="agent">Agent</option>
+                        <option value="cs">Customer Support</option>
                       </select>
                     </Col>
                   </FormGroup>

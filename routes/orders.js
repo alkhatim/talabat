@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
+const agent = require("../middleware/agent");
 const admin = require("../middleware/admin");
 const { Order, validate } = require("../models/Order");
 const { Client } = require("../models/Client");
 const validateId = require("../middleware/validateId");
 const exchange = require("../helpers/exchange");
+
+router.use(agent);
 
 router.get("/", async (req, res) => {
   let orders = await Order.find({})

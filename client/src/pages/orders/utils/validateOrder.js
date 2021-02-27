@@ -5,7 +5,7 @@ export default (order) => {
     .keys({
       _id: Joi.string().min(24).max(24).allow(""),
       client: Joi.string().min(24).max(24).required(),
-      orderNumber: Joi.string().min(4).max(50).required(),
+      orderNumber: Joi.string().min(4).required(),
       category: Joi.string().required(),
       description: Joi.string().min(3).max(256).required(),
       delivery: Joi.string().valid("FULL", "PICKUP").required(),
