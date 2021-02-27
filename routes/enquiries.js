@@ -85,6 +85,7 @@ router.post("/:id/comment", validateId, async (req, res) => {
           createdBy: req.user._id,
         },
       },
+      $set: { status: "ANSWERED" },
     },
     { new: true }
   )

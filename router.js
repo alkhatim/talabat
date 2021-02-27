@@ -8,6 +8,7 @@ const filesRouter = require("./routes/files");
 const categoriesRouter = require("./routes/categories");
 const ratesRouter = require("./routes/rates");
 const enquiriesRouter = require("./routes/enquiries");
+const dashboardRouter = require("./routes/dashboard");
 
 router.use(auth);
 router.use("/orders", ordersRouter);
@@ -17,5 +18,6 @@ router.use("/files", filesRouter);
 router.use("/categories", categoriesRouter);
 router.use("/rates", ratesRouter);
 router.use("/enquiries", enquiriesRouter);
+router.use("/dashboard", dashboardRouter);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Login from "../pages/auth/Login";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
 import Profile from "../pages/auth/Profile";
 import Order from "../pages/orders/Order";
 import Orders from "../pages/orders/Orders";

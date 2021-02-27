@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import paginationFactory, {
   PaginationListStandalone,
@@ -12,7 +11,6 @@ const PAGE_SIZE = 8;
 
 const EnquiriesTable = ({ enquiries }) => {
   const [data, setData] = useState([]);
-  const { role } = useSelector((store) => store.auth.user);
 
   useEffect(() => {
     handleFilter("", { page: 1, searchText: "" });
@@ -50,6 +48,11 @@ const EnquiriesTable = ({ enquiries }) => {
     {
       dataField: "contactMethod",
       text: "Contact Method",
+      sort: true,
+    },
+    {
+      dataField: "status",
+      text: "Status",
       sort: true,
     },
     {

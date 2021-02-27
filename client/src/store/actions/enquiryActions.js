@@ -8,7 +8,13 @@ export const getEnquiries = () => async (dispatch) => {
       type: "ENQUIRIES_LOADED",
       payload: data.map((enquiry) => ({
         ...enquiry,
-        createdAt: new Date(enquiry.createdAt).toLocaleString(),
+        createdAt: new Date(enquiry.createdAt).toLocaleString([], {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       })),
     });
   } catch (error) {

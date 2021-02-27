@@ -23,7 +23,13 @@ const EnquiryComments = memo(
                   <h5 className="font-size-14 mb-1">
                     {comment.createdBy.username}
                     <small className="text-muted float-right">
-                      {new Date(comment.createdAt).toLocaleString()}
+                      {new Date(comment.createdAt).toLocaleString([], {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </small>
                   </h5>
                   <p className="text-muted">{comment.comment}</p>

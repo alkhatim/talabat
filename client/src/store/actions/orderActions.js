@@ -8,7 +8,13 @@ export const getOrders = () => async (dispatch) => {
       type: "ORDERS_LOADED",
       payload: data.map((order) => ({
         ...order,
-        createdAt: new Date(order.createdAt).toLocaleString(),
+        createdAt: new Date(order.createdAt).toLocaleString([], {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       })),
     });
   } catch (error) {
@@ -30,7 +36,13 @@ export const getClientOrders = async (id) => {
     const { data } = await http.get(`/api/v1/orders/client/${id}`);
     return data.map((order) => ({
       ...order,
-      createdAt: new Date(order.createdAt).toLocaleString(),
+      createdAt: new Date(order.createdAt).toLocaleString([], {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     }));
   } catch (error) {
     messages.error(error);

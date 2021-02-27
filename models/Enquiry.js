@@ -6,6 +6,12 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["NEW", "ANSWERED"],
+    default: "NEW",
+    required: true,
+  },
   phone: {
     type: String,
     required: true,
@@ -56,6 +62,7 @@ const validate = function (enquiry) {
     .keys({
       _id: Joi.string().min(24).max(24).allow(""),
       client: Joi.string().min(3).required(),
+      status: Joi.string().valid("NEW", "ANSWERED").allow(""),
       phone: Joi.string().min(8).max(12).required(),
       contactMethod: Joi.string()
         .valid("FACEBOOK", "INSTAGRAM", "WHATSAPP", "PHONECALL")

@@ -27,9 +27,13 @@ export default (order) => {
       id: id++,
       statusTitle: status,
       iconClass: "bx bx-block h2 text-primary",
-      description: `${new Date(history.at).toLocaleString()}  ,  ${
-        history.by.username
-      }`,
+      description: `${new Date(history.at).toLocaleString([], {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })}  ,  ${history.by.username}`,
     });
   }
 
@@ -39,9 +43,13 @@ export default (order) => {
     iconClass: `bx bxs-cart-add h2 ${
       status === "CANCELED" ? "text-muted" : "text-primary"
     }`,
-    description: `${new Date(order.createdAt).toLocaleString()}  ,  ${
-      order.createdBy.username
-    }`,
+    description: `${new Date(order.createdAt).toLocaleString([], {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })}  ,  ${order.createdBy.username}`,
   });
 
   const active = statuses.slice(0, statuses.indexOf(status) + 1);
@@ -54,9 +62,13 @@ export default (order) => {
       id: id++,
       statusTitle: item,
       iconClass: `bx ${timelines[item]} text-primary h2`,
-      description: `${new Date(history.at).toLocaleString()}  ,  ${
-        history.by.username
-      }`,
+      description: `${new Date(history.at).toLocaleString([], {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })}  ,  ${history.by.username}`,
     });
   });
 

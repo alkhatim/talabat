@@ -95,7 +95,7 @@ const SidebarContent = (props) => {
 
           <li>
             <OutterLink to="/#" className="has-arrow waves-effect">
-              <i className="bx bx-message-alt-detail"></i>
+              <i className="bx bx-message-square-dots"></i>
               <span>Enquiries</span>
             </OutterLink>
             <ul className="sub-menu" aria-expanded="false">

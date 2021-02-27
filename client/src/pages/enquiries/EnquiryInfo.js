@@ -12,8 +12,8 @@ import {
   uploadFile,
 } from "../../store/actions/enquiryActions";
 import EnquiryComments from "./components/EnquiryComments";
-import FilesTable from "./components/FilesTable";
-import FileForm from "./components/FileForm";
+import FilesTable from "../orders/components/FilesTable";
+import FileForm from "../orders/components/FileForm";
 
 const EnquiryInfo = () => {
   const params = useParams();
@@ -103,6 +103,16 @@ const EnquiryInfo = () => {
       <Container fluid={true}>
         <Breadcrumbs title="Enquiries" breadcrumbItem="Enquiry Info" />
         <Row>
+          <Col lg={12}>
+            <EnquiryComments
+              enquiry={enquiry}
+              onCommentChange={handleCommentChange}
+              onAddComment={handleAddComment}
+              newComment={newComment}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col lg={6}>
             <FileForm
               file={newFile}
@@ -116,16 +126,6 @@ const EnquiryInfo = () => {
               files={files}
               onDelete={handleFileDelete}
               onOpen={handleFileOpen}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={12}>
-            <EnquiryComments
-              enquiry={enquiry}
-              onCommentChange={handleCommentChange}
-              onAddComment={handleAddComment}
-              newComment={newComment}
             />
           </Col>
         </Row>
