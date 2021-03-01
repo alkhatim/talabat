@@ -24,9 +24,9 @@ export default memo(({ payment }) => {
             show: true,
             label: "Total",
             color: "#000",
-            fontSize: "16px",
+            fontSize: "14px",
             fontFamily: void 0,
-            fontWeight: 600,
+            fontWeight: 500,
             formatter: function (e) {
               return e.globals.seriesTotals[0].toLocaleString("en-US", {
                 style: "currency",

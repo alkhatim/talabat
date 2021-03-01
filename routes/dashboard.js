@@ -43,6 +43,7 @@ router.get("/notifications", async (req, res) => {
   });
   const arrivedOrders = await Order.count({
     status: "ARRIVED",
+    delivery: "FULL",
   });
   const newEnquiries = await Enquiry.count({
     status: "NEW",

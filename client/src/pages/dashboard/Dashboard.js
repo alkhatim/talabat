@@ -31,21 +31,16 @@ const Dashboard = () => {
         <Container fluid>
           <h4>Dashboard</h4>
           <Row>
-            <Col xl={5} lg={6}>
+            <Col xl={4} lg={6}>
               <Notifications notifications={notifications} />
+              <Payment payment={payment} />
             </Col>
             <Col xl={4} lg={6}>
               <StatusReport status={status} />
             </Col>
-            <Col xl={3} lg={6}>
+            <Col xl={4} lg={6}>
               <CategoriesReport categories={categories} />
             </Col>
-          </Row>
-          <Row>
-            <Col xl={4} lg={6}>
-              <Payment payment={payment} />
-            </Col>
-            <Col xl={4} lg={6}></Col>
           </Row>
         </Container>
       </div>
