@@ -4,7 +4,7 @@ import { Col, Container, Row } from "reactstrap";
 import StatusReport from "./components/StatusReport";
 import CategoriesReport from "./components/CategoriesReport";
 import Notifications from "./components/Notifications";
-import Payment from "./components/Payment";
+import PaymentReport from "./components/PaymentReport";
 import {
   getStatus,
   getCategories,
@@ -33,7 +33,7 @@ const Dashboard = () => {
           <Row>
             <Col xl={4} lg={6}>
               <Notifications notifications={notifications} />
-              <Payment payment={payment} />
+              <PaymentReport payment={payment} />
             </Col>
             <Col xl={4} lg={6}>
               <StatusReport status={status} />
