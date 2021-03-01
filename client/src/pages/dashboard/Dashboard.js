@@ -5,16 +5,19 @@ import StatusReport from "./components/StatusReport";
 import CategoriesReport from "./components/CategoriesReport";
 import Notifications from "./components/Notifications";
 import PaymentReport from "./components/PaymentReport";
+import Widgets from "./components/Widgets";
+import Social from "./components/Social";
 import {
   getStatus,
   getCategories,
   getNotifications,
   getPayment,
+  getWidgets,
 } from "../../store/actions/dashboardActions";
 
 const Dashboard = () => {
   const disptach = useDispatch();
-  const { categories, status, notifications, payment } = useSelector(
+  const { categories, status, notifications, payment, widgets } = useSelector(
     (store) => store.dashboard
   );
 
@@ -23,6 +26,7 @@ const Dashboard = () => {
     disptach(getCategories());
     disptach(getNotifications());
     disptach(getPayment());
+    disptach(getWidgets());
   }, []);
 
   return (
@@ -37,9 +41,11 @@ const Dashboard = () => {
             </Col>
             <Col xl={4} lg={6}>
               <StatusReport status={status} />
+              <Widgets data={widgets} />
             </Col>
             <Col xl={4} lg={6}>
               <CategoriesReport categories={categories} />
+              <Social  />
             </Col>
           </Row>
         </Container>

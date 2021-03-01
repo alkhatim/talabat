@@ -37,7 +37,7 @@ export default memo(({ status }) => {
                       value={(status.value * 100) / total}
                       color={getColor(status.status)}
                       className="bg-transparent"
-                      size="sm"
+                      size="lg"
                     />
                   </td>
                 </tr>

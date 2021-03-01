@@ -4,6 +4,7 @@ const INIT_STATE = {
   status: [],
   notifications: [],
   payment: [],
+  widgets: {},
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -32,6 +33,11 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         payment: action.payload,
+      };
+    case "WIDGETS_LOADED":
+      return {
+        ...state,
+        widgets: action.payload,
       };
 
     default:

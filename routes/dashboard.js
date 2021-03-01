@@ -67,7 +67,6 @@ router.get("/payment", async (req, res) => {
   const rate = await mongoose.connection
     .collection("config")
     .findOne({ name: "rates" });
-
   if (!rate) return res.status(500).send("The currency rates are missing");
 
   let orders = await Order.find({ status: { $ne: "CANCELED" } })
@@ -91,6 +90,54 @@ router.get("/payment", async (req, res) => {
     orders.reduce((prev, curr) => (prev += curr.profit), 0),
   ];
   res.status(200).send(payment);
+});
+
+router.get("/widgets", async (req, res) => {
+  const thisWeek = new Date().setDate(new Date().getDate() - 7);
+  const lastWeek = new Date().setDate(new Date().getDate() - 14);
+
+  const rate = await mongoose.connection
+    .collection("config")
+    .findOne({ name: "rates" });
+  if (!rate) return res.status(500).send("The currency rates are missing");
+
+  const thisWeekOrders = await Order.find({
+    status: { $ne: "CANCELED" },
+    createdAt: { $gte: thisWeek },
+  })
+    .select("price")
+    .lean();
+  const lastWeekOrders = await Order.find({
+    status: { $ne: "CANCELED" },
+    $and: [{ createdAt: { $gte: lastWeek } }, { createdAt: { $lt: thisWeek } }],
+  })
+    .select("price")
+    .lean();
+
+  res.status(200).send({
+    thisWeekOrders: thisWeekOrders.length,
+    lastWeekOrders: lastWeekOrders.length,
+    thisWeekProfit: thisWeekOrders.reduce(
+      (prev, curr) =>
+        (prev += exchange(
+          curr.price.profit,
+          curr.price.itemCurrency,
+          "USD",
+          rate
+        )),
+      0
+    ),
+    lastWeekProfit: lastWeekOrders.reduce(
+      (prev, curr) =>
+        (prev += exchange(
+          curr.price.profit,
+          curr.price.itemCurrency,
+          "USD",
+          rate
+        )),
+      0
+    ),
+  });
 });
 
 module.exports = router;

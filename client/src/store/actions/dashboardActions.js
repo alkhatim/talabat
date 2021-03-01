@@ -45,3 +45,12 @@ export const getPayment = () => async (dispatch) => {
     messages.error(error);
   }
 };
+
+export const getWidgets = () => async (dispatch) => {
+  try {
+    const { data } = await http.get(`/api/v1/dashboard/widgets`);
+    dispatch({ type: "WIDGETS_LOADED", payload: data });
+  } catch (error) {
+    messages.error(error);
+  }
+};
