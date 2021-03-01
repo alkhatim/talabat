@@ -1,10 +1,7 @@
 import { memo } from "react";
 import { Card, CardBody, Media } from "reactstrap";
-import { useHistory } from "react-router-dom";
 
 export default memo(({ notifications }) => {
-  const history = useHistory();
-
   const data = [];
   if (notifications.lateOrders)
     data.push({
@@ -17,6 +14,12 @@ export default memo(({ notifications }) => {
       title: "Non-shipped Orders",
       message: `${notifications.receivedOrders} orders are waiting to be shipped`,
       icon: "bx bx-package text-success bx-md",
+    });
+  if (notifications.arrivedOrders)
+    data.push({
+      title: "Non-delivered Orders",
+      message: `${notifications.arrivedOrders} orders should be out for delivery`,
+      icon: "bx bx-car text-primary bx-md",
     });
   if (notifications.newEnquiries)
     data.push({

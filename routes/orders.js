@@ -151,6 +151,14 @@ router.post("/:id/status", [admin, validateId], async (req, res) => {
 
   if (order.status === "CANCELED")
     return res.status(400).send("Order is canceled");
+  
+    if (
+      req.body.status === "COMPLETED" &&
+      order.price.payoutTotal !== order.price.paid
+    )
+      return res
+        .status(400)
+        .send("Client must pay before the order is completed");
 
   const statuses = [
     "CREATED",

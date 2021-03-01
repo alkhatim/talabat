@@ -36,3 +36,12 @@ export const getNotifications = () => async (dispatch) => {
     messages.error(error);
   }
 };
+
+export const getPayment = () => async (dispatch) => {
+  try {
+    const { data } = await http.get(`/api/v1/dashboard/payment`);
+    dispatch({ type: "PAYMENT_LOADED", payload: data });
+  } catch (error) {
+    messages.error(error);
+  }
+};

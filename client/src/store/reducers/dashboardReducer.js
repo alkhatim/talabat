@@ -3,6 +3,7 @@ const INIT_STATE = {
   frequency: [],
   status: [],
   notifications: [],
+  payment: [],
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -26,6 +27,11 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         notifications: action.payload,
+      };
+    case "PAYMENT_LOADED":
+      return {
+        ...state,
+        payment: action.payload,
       };
 
     default:

@@ -50,7 +50,7 @@ const OrderPayment = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
               </p>
               <h5>
                 {(
-                  order.price.payoutTotal - order.price.paid || ""
+                  order.price.payoutTotal - order.price.paid || 0
                 )?.toLocaleString("en-US", {
                   style: "currency",
                   currency: order.price.payoutCurrency,
