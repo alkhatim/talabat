@@ -146,18 +146,16 @@ const OrderInfo = () => {
                 onPay={handlePay}
                 onCancel={handleCancel}
               />
+              <FileForm
+                file={newFile}
+                onFileChange={handleFileChange}
+                onUpload={handleUpload}
+              />
             </Col>
           )}
         </Row>
         <Row>
-          <Col lg={6}>
-            <FileForm
-              file={newFile}
-              onFileChange={handleFileChange}
-              onUpload={handleUpload}
-            />
-          </Col>
-          <Col lg={6}>
+          <Col lg={12}>
             <FilesTable
               files={files}
               onDelete={handleFileDelete}
