@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Card, CardBody, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import paginationFactory, {
   PaginationListStandalone,
   PaginationProvider,
@@ -10,7 +10,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 const PAGE_SIZE = 8;
 
-const OrdersTable = ({ orders }) => {
+const OrdersTable = ({ orders, display, setDisplay }) => {
   const [data, setData] = useState([]);
   const { role } = useSelector((store) => store.auth.user);
 
@@ -24,13 +24,35 @@ const OrdersTable = ({ orders }) => {
     const startIndex = (page - 1) * PAGE_SIZE;
     const lastIndex = startIndex + PAGE_SIZE;
     const paged = orders.slice(startIndex, lastIndex);
-    setData(
-      paged.filter((order) =>
-        Object.keys(order).some((key) =>
-          order[key].toString().toLowerCase().includes(searchText.toLowerCase())
-        )
-      )
+    const filtered = paged.filter((order) =>
+      Object.keys(order).some((key) => {
+        if (typeof order[key] === "object" && order[key].name)
+          return order[key].name
+            .toString()
+            .toLowerCase()
+            .includes(searchText.toLowerCase());
+        return order[key]
+          .toString()
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
+      })
     );
+    switch (display) {
+      case "active":
+        setData(
+          filtered.filter(
+            (item) => item.status !== "CANCELED" && item.status !== "COMPLETED"
+          )
+        );
+        break;
+      case "completed":
+        setData(filtered.filter((item) => item.status === "COMPLETED"));
+        break;
+
+      default:
+        setData(filtered);
+        break;
+    }
   };
 
   const columns = [
@@ -98,6 +120,49 @@ const OrdersTable = ({ orders }) => {
         <Col lg="12">
           <Card>
             <CardBody>
+              <Nav
+                pills
+                className="navtab-bg nav-justified mb-4"
+                style={{ maxWidth: "40vw" }}
+              >
+                <NavItem>
+                  <NavLink
+                    style={{ cursor: "pointer" }}
+                    className={display === "active" ? "active" : ""}
+                    onClick={() => {
+                      setDisplay("active");
+                      handleFilter("", { page: 1, searchText: "" });
+                    }}
+                  >
+                    Active
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    style={{ cursor: "pointer" }}
+                    className={display === "all" ? "active" : ""}
+                    onClick={() => {
+                      setDisplay("all");
+                      handleFilter("", { page: 1, searchText: "" });
+                    }}
+                  >
+                    All
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    style={{ cursor: "pointer" }}
+                    className={display === "completed" ? "active" : ""}
+                    onClick={() => {
+                      setDisplay("completed");
+                      handleFilter("", { page: 1, searchText: "" });
+                    }}
+                  >
+                    Completed
+                  </NavLink>
+                </NavItem>
+              </Nav>
+
               <PaginationProvider
                 pagination={paginationFactory({
                   sizePerPage: PAGE_SIZE,

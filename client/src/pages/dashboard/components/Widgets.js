@@ -37,23 +37,23 @@ export default memo(({ data }) => {
                   </div>
                   <h5 className="font-size-14 mb-0">{widget.title}</h5>
                 </div>
-                <div className="text-muted mt-4">
-                  <h4>
-                    {widget.value}
-                    <i className="mdi mdi-chevron-up ml-1 text-success" />
-                  </h4>
-                  <div className="d-flex">
-                    <span
-                      className={
-                        "badge badge-soft-" + widget.color + " font-size-12"
-                      }
-                    >
-                      {widget.badgeValue}%
-                    </span>
-                    <span className="ml-2 text-truncate">
-                      from previous week
-                    </span>
-                  </div>
+                <div className="text-muted ml-2 mt-4">
+                  <h4>{widget.value}</h4>
+                  <span
+                    className={
+                      "badge badge-soft-" + widget.color + " font-size-12"
+                    }
+                  >
+                    {widget.badgeValue}%
+                  </span>
+                  <i
+                    className={`mdi mdi-chevron-${
+                      widget.badgeValue > 0
+                        ? "up text-success"
+                        : "down text-danger"
+                    } ml-1 `}
+                  />
+                  from previous week
                 </div>
               </CardBody>
             </Card>
