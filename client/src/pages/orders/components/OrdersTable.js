@@ -120,11 +120,7 @@ const OrdersTable = ({ orders, display, setDisplay }) => {
         <Col lg="12">
           <Card>
             <CardBody>
-              <Nav
-                pills
-                className="navtab-bg nav-justified mb-4"
-                style={{ maxWidth: "40vw" }}
-              >
+              <Nav pills className="navtab-bg nav-justified mb-4 table-filter">
                 <NavItem>
                   <NavLink
                     style={{ cursor: "pointer" }}

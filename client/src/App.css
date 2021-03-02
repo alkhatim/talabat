@@ -8,6 +8,16 @@
   align-items: center;
 }
 
+.table-filter {
+  max-width: 40vw;
+}
+
+@media only screen and (max-width: 576px) {
+  .table-filter {
+    max-width: 80vw;
+  }
+}
+
 /* Font size */
 .bold-text {
   font-weight: 600 !important;
