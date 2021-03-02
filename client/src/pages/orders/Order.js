@@ -381,6 +381,7 @@ const Order = () => {
                     className="w-md"
                     onClick={handleSubmit}
                   >
+                    <i className="bx bx-check-double font-size-16 align-middle mr-2" />
                     Confirm
                   </Button>
                 </div>

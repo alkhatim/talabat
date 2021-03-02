@@ -57,6 +57,7 @@ const EnquiryComments = memo(
             </Form>
             <div className="text-right">
               <button onClick={onAddComment} className="btn btn-success w-sm">
+                <i className="bx bx-check-double font-size-16 align-middle mr-2" />
                 Submit
               </button>
             </div>

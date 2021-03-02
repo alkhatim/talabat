@@ -74,6 +74,7 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
             </FormGroup>
 
             <Button color="success" className="w-md" onClick={onUpdate}>
+              <i className="bx bx-check-double font-size-16 align-middle mr-2" />
               Update
             </Button>
           </Form>

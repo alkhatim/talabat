@@ -30,6 +30,7 @@ const FilesForm = ({ file, onFileChange, onUpload }) => {
           </FormGroup>
 
           <Button color="primary" className="w-md" onClick={onUpload}>
+            <i className="bx bx-upload font-size-16 align-middle mr-2" />
             Upload
           </Button>
         </Form>

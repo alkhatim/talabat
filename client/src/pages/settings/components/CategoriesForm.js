@@ -38,6 +38,7 @@ const CategoriesForm = ({ category, onCategoryChange, onCreate }) => {
             </FormGroup>
 
             <Button color="primary" className="w-md" onClick={onCreate}>
+              <i className="bx bx-plus font-size-16 align-middle mr-2" />
               Add
             </Button>
           </Form>

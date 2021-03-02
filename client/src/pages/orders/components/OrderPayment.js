@@ -82,23 +82,25 @@ const OrderPayment = memo(({ order, onPay, onCancel, paid, onPaidChange }) => {
         </div>
 
         <Row>
-          <Col lg={6} className="mb-4 text-center">
+          <Col xs={6} className="mb-4 text-right">
             <Button
               type="button"
               color="success"
               className="w-md"
               onClick={onPay}
             >
+              <i className="bx bx-check-double font-size-16 align-middle mr-2" />
               Add Payment
             </Button>
           </Col>
-          <Col lg={6} className="mb-4 text-center">
+          <Col xs={6} className="mb-4 text-left">
             <Button
               type="button"
               color="danger"
               className="w-md"
               onClick={onCancel}
             >
+              <i className="bx bx-block font-size-16 align-middle mr-2"  />
               Cancel Order
             </Button>
           </Col>

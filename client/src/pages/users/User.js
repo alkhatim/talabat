@@ -163,6 +163,7 @@ const User = () => {
                           className="w-md mr-2"
                           onClick={handleSubmit}
                         >
+                          <i className="bx bx-check-double font-size-16 align-middle mr-2" />
                           Confirm
                         </Button>
                         {user._id && (
@@ -173,6 +174,7 @@ const User = () => {
                             }}
                             id="resetPassword"
                           >
+                            <i className="bx bx-reset font-size-16 align-middle mr-2" />
                             Reset Password
                           </Button>
                         )}
