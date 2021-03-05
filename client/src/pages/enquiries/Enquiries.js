@@ -17,7 +17,7 @@ const Enquiries = () => {
   return (
     <div className="page-content">
       <Container fluid>
-        <Breadcrumbs title="Orders" breadcrumbItem="All Orders" />
+        <Breadcrumbs title="Enquiries" breadcrumbItem="All Enquiries" />
         <EnquiriesTable enquiries={enquiries} />
       </Container>
     </div>

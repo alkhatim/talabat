@@ -72,6 +72,7 @@ router.get("/", async (req, res) => {
     const user = await User.findById(decoded._id)
       .select("_id username phone email role")
       .lean();
+    if (!user) return res.status(400).send("Wrong token");
     res.status(200).send(user);
   } catch (error) {
     res.status(400).send("Invalid authentication token");
