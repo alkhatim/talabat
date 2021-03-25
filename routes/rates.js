@@ -7,10 +7,12 @@ router.use(admin);
 
 router.post("/", async (req, res) => {
   const rates = {
-    USD: 1,
-    SDG: parseFloat(req.body.SDG),
-    AED: parseFloat(req.body.AED),
-    SAR: parseFloat(req.body.SAR),
+    USD2SDG: parseFloat(req.body.USD2SDG),
+    USD2AED: parseFloat(req.body.USD2AED),
+    USD2SAR: parseFloat(req.body.USD2SAR),
+    AED2SDG: parseFloat(req.body.AED2SDG),
+    AED2SAR: parseFloat(req.body.AED2SAR),
+    SAR2SDG: parseFloat(req.body.SAR2SDG),
   };
 
   await mongoose.connection

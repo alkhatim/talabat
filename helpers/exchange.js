@@ -1,33 +1,50 @@
 module.exports = (price, from, to, rate) => {
-  let usd = 0;
-
   switch (from) {
     case "USD":
-      usd = parseFloat(price);
-      break;
+      switch (to) {
+        case "SDG":
+          return parseFloat(price * rate.USD2SDG);
+        case "AED":
+          return parseFloat(price * rate.USD2AED);
+        case "SAR":
+          return parseFloat(price * rate.USD2SAR);
+        default:
+          return parseFloat(price);
+      }
     case "SDG":
-      usd = parseFloat(price / rate.SDG);
-      break;
+      switch (to) {
+        case "USD":
+          return parseFloat(price / rate.USD2SDG);
+        case "AED":
+          return parseFloat(price / rate.AED2SDG);
+        case "SAR":
+          return parseFloat(price / rate.SAR2SDG);
+        default:
+          return parseFloat(price);
+      }
     case "AED":
-      usd = parseFloat(price / rate.AED);
-      break;
+      switch (to) {
+        case "USD":
+          return parseFloat(price / rate.USD2AED);
+        case "SDG":
+          return parseFloat(price * rate.AED2SDG);
+        case "SAR":
+          return parseFloat(price * rate.AED2SAR);
+        default:
+          return parseFloat(price);
+      }
     case "SAR":
-      usd = parseFloat(price / rate.SAR);
-      break;
+      switch (to) {
+        case "USD":
+          return parseFloat(price / rate.USD2SAR);
+        case "AED":
+          return parseFloat(price / rate.AED2SAR);
+        case "SDG":
+          return parseFloat(price * rate.SAR2SDG);
+        default:
+          return parseFloat(price);
+      }
     default:
-      usd = parseFloat(price);
-  }
-
-  switch (to) {
-    case "USD":
-      return parseFloat(usd);
-    case "SDG":
-      return parseFloat(usd * rate.SDG);
-    case "AED":
-      return parseFloat(usd * rate.AED);
-    case "SAR":
-      return parseFloat(usd * rate.SAR);
-    default:
-      return parseFloat(usd);
+      return parseFloat(price);
   }
 };

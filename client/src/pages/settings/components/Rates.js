@@ -23,15 +23,15 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                 for="horizontal-firstname-Input"
                 className="col-sm-3 col-form-Label"
               >
-                Sudanese Pound
+                SDG to USD
               </Label>
               <Col sm={9}>
                 <Input
                   type="text"
-                  id="SDG"
-                  name="SDG"
+                  id="SDG2USD"
+                  name="SDG2USD"
                   className="form-control"
-                  value={rates.SDG}
+                  value={rates.SDG2USD}
                   onChange={onRatesChange}
                 />
               </Col>
@@ -41,15 +41,15 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                 for="horizontal-firstname-Input"
                 className="col-sm-3 col-form-Label"
               >
-                UAE Dirhams
+                SDG to AED
               </Label>
               <Col sm={9}>
                 <Input
                   type="text"
-                  id="AED"
-                  name="AED"
+                  id="SDG2AED"
+                  name="SDG2AED"
                   className="form-control"
-                  value={rates.AED}
+                  value={rates.SDG2AED}
                   onChange={onRatesChange}
                 />
               </Col>
@@ -59,15 +59,69 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                 for="horizontal-firstname-Input"
                 className="col-sm-3 col-form-Label"
               >
-                Saudi Riyal
+                SDG to SAR
               </Label>
               <Col sm={9}>
                 <Input
                   type="text"
-                  id="SAR"
-                  name="SAR"
+                  id="SDG2SAR"
+                  name="SDG2SAR"
                   className="form-control"
-                  value={rates.SAR}
+                  value={rates.SDG2SAR}
+                  onChange={onRatesChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup className="row mb-4">
+              <Label
+                for="horizontal-firstname-Input"
+                className="col-sm-3 col-form-Label"
+              >
+                USD to AED
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="text"
+                  id="USD2AED"
+                  name="USD2AED"
+                  className="form-control"
+                  value={rates.USD2AED}
+                  onChange={onRatesChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup className="row mb-4">
+              <Label
+                for="horizontal-firstname-Input"
+                className="col-sm-3 col-form-Label"
+              >
+                USD to SAR
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="text"
+                  id="USD2SAR"
+                  name="USD2SAR"
+                  className="form-control"
+                  value={rates.USD2SAR}
+                  onChange={onRatesChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup className="row mb-4">
+              <Label
+                for="horizontal-firstname-Input"
+                className="col-sm-3 col-form-Label"
+              >
+                AED to SAR
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="text"
+                  id="AED2SAR"
+                  name="AED2SAR"
+                  className="form-control"
+                  value={rates.AED2SAR}
                   onChange={onRatesChange}
                 />
               </Col>

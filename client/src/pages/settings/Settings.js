@@ -17,7 +17,14 @@ import messages from "../../services/messages";
 const Settings = () => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState({ name: "" });
-  const [rates, setRates] = useState({ USD: "", SDG: "", AED: "", SAR: "" });
+  const [rates, setRates] = useState({
+    USD2SDG: "",
+    USD2AED: "",
+    USD2SAR: "",
+    AED2SDG: "",
+    AED2SAR: "",
+    SAR2SDG: "",
+  });
   const [selectedCategory, setselectedCategory] = useState("");
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [deleteSuccessDialog, setDeleteSuccessDialog] = useState(false);
