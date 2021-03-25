@@ -23,51 +23,15 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                 for="horizontal-firstname-Input"
                 className="col-sm-3 col-form-Label"
               >
-                SDG to USD
+                USD to SDG
               </Label>
               <Col sm={9}>
                 <Input
                   type="text"
-                  id="SDG2USD"
-                  name="SDG2USD"
+                  id="USD2SDG"
+                  name="USD2SDG"
                   className="form-control"
-                  value={rates.SDG2USD}
-                  onChange={onRatesChange}
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup className="row mb-4">
-              <Label
-                for="horizontal-firstname-Input"
-                className="col-sm-3 col-form-Label"
-              >
-                SDG to AED
-              </Label>
-              <Col sm={9}>
-                <Input
-                  type="text"
-                  id="SDG2AED"
-                  name="SDG2AED"
-                  className="form-control"
-                  value={rates.SDG2AED}
-                  onChange={onRatesChange}
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup className="row mb-4">
-              <Label
-                for="horizontal-firstname-Input"
-                className="col-sm-3 col-form-Label"
-              >
-                SDG to SAR
-              </Label>
-              <Col sm={9}>
-                <Input
-                  type="text"
-                  id="SDG2SAR"
-                  name="SDG2SAR"
-                  className="form-control"
-                  value={rates.SDG2SAR}
+                  value={rates.USD2SDG}
                   onChange={onRatesChange}
                 />
               </Col>
@@ -113,6 +77,24 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                 for="horizontal-firstname-Input"
                 className="col-sm-3 col-form-Label"
               >
+                AED to SDG
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="text"
+                  id="AED2SDG"
+                  name="AED2SDG"
+                  className="form-control"
+                  value={rates.AED2SDG}
+                  onChange={onRatesChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup className="row mb-4">
+              <Label
+                for="horizontal-firstname-Input"
+                className="col-sm-3 col-form-Label"
+              >
                 AED to SAR
               </Label>
               <Col sm={9}>
@@ -122,6 +104,24 @@ const CategoriesFourm = ({ rates, onRatesChange, onUpdate }) => {
                   name="AED2SAR"
                   className="form-control"
                   value={rates.AED2SAR}
+                  onChange={onRatesChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup className="row mb-4">
+              <Label
+                for="horizontal-firstname-Input"
+                className="col-sm-3 col-form-Label"
+              >
+                SAR to SDG
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="text"
+                  id="SAR2SDG"
+                  name="SAR2SDG"
+                  className="form-control"
+                  value={rates.SAR2SDG}
                   onChange={onRatesChange}
                 />
               </Col>
