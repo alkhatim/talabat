@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const agent = require("../middleware/agent");
+const round = require("../middleware/round");
 const admin = require("../middleware/admin");
 const { Order, validate } = require("../models/Order");
 const { Client } = require("../models/Client");
@@ -9,6 +10,7 @@ const validateId = require("../middleware/validateId");
 const exchange = require("../helpers/exchange");
 
 router.use(agent);
+router.use(round);
 
 router.get("/", async (req, res) => {
   let orders = await Order.find({})
@@ -137,7 +139,7 @@ router.post("/:id/pay", [admin, validateId], async (req, res) => {
     return res.status(400).send("Order is cancelled");
 
   order.price.paid = parseFloat(order.price.paid) + parseFloat(req.body.paid);
-  if (order.price.paid > order.price.payoutTotal)
+  if (Math.round(order.price.paid) > Math.round(order.price.payoutTotal))
     return res.status(400).send("Amount larger than order total");
   await order.save();
 
@@ -151,14 +153,14 @@ router.post("/:id/status", [admin, validateId], async (req, res) => {
 
   if (order.status === "CANCELED")
     return res.status(400).send("Order is canceled");
-  
-    if (
-      req.body.status === "COMPLETED" &&
-      order.price.payoutTotal !== order.price.paid
-    )
-      return res
-        .status(400)
-        .send("Client must pay before the order is completed");
+
+  if (
+    req.body.status === "COMPLETED" &&
+    Math.round(order.price.payoutTotal) < Math.round(order.price.paid)
+  )
+    return res
+      .status(400)
+      .send("Client must pay before the order is completed");
 
   const statuses = [
     "CREATED",
