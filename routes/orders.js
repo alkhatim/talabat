@@ -188,6 +188,11 @@ router.post("/:id/status", [admin, validateId], async (req, res) => {
   } else {
     order.statusHistory.pop();
   }
+
+  if (req.body.status === "CANCELED") {
+    order.price.paid = 0;
+  }
+  
   await order.save();
 
   order = await Order.findById(order._id)
