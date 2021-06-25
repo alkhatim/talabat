@@ -4,6 +4,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/User");
+const auth = require("../middleware/auth");
 
 router.post("/", async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
@@ -24,7 +25,7 @@ router.post("/", async (req, res) => {
     .send(_.pick(user, ["_id", "username", "phone", "email", "role"]));
 });
 
-router.put("/", async (req, res) => {
+router.put("/", auth, async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -39,7 +40,7 @@ router.put("/", async (req, res) => {
     .send(_.pick(user, ["_id", "username", "phone", "email", "role"]));
 });
 
-router.put("/updatepassword", async (req, res) => {
+router.put("/updatepassword", auth, async (req, res) => {
   if (req.body.newPassword !== req.body.confirmPassword) {
     return res.status(400).send("Passwords don't match");
   }

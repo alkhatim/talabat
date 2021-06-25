@@ -51,7 +51,7 @@ const validate = function (user) {
       email: Joi.string().required(),
       role: Joi.string().valid("agent", "admin", "cs").required(),
     })
-    .unknown(false);
+    .unknown(true);
 
   return Joi.validate(user, schema);
 };
